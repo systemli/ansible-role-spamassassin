@@ -3,3 +3,8 @@
   service:
     name: spamassassin
     state: restarted
+
+- name: restart monit
+  service:
+    name: monit
+    state: restarted
