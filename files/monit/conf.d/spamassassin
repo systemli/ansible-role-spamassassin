@@ -1,0 +1,4 @@
+check process tor with pidfile /var/run/spamd.pid
+    start program = "/usr/sbin/service spamassassin start" with timeout 60 seconds
+    stop program  = "/usr/sbin/service spamassassin stop"
+    group server

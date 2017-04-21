@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  author: systemli
+  description: Install and maintain spamassassin, to fight spam. Contains tests for Molecule.
+  company: systemli.org
+  license: GPLv3
+  min_ansible_version: 1.8
+  galaxy_tags:
+  - mail
+  - spam
+  - spamassassin
+  - monitoring
+  platforms:
+  - name: Debian
+    versions:
+    - jessie
+    - stretch
