@@ -23,7 +23,7 @@ Defaults:
     
     # Rewrite the mail header?
     spamassassin_rewrite_header_enabled: true
-    spamassassin_rewrite_header: "Subject [*****SPAM*****]"
+    spamassassin_rewrite_header: "Subject *****SPAM*****"
     
     # Allowed 0, 1, 2 - see https://spamassassin.apache.org/full/3.0.x/dist/doc/Mail_SpamAssassin_Conf.html
     spamassassin_report_safe: 0
