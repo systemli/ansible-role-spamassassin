@@ -49,6 +49,8 @@ required_score {{ spamassassin_required_score }}
 # use_bayes 1
 use_bayes {{ spamassassin_use_bayes }}
 
+bayes_path {{ spamassassin_bayes_path }}/bayes
+bayes_file_mode {{ spamassassin_bayes_file_mode }}
 
 #   Bayesian classifier auto-learning (default: 1)
 #

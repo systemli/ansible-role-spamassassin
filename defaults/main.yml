@@ -27,6 +27,12 @@ spamassassin_use_bayes: 1
 # Whether to use rules using the naive-Bayesian-style classifier built into SpamAssassin.
 spamassassin_bayes_auto_learn: 1
 
+# Where to store bayes db
+spamassassin_bayes_path: "{{ spamassassin_home }}bayes_db"
+
+# Permissions of bayes_db files
+spamassassin_bayes_file_mode: "0777"
+
 # What networks or hosts are 'trusted' in your setup.
 spamassassin_trusted_networks: []
 

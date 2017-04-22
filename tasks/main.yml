@@ -30,12 +30,15 @@
     groups: spamd
     append: yes
 
-- name: ensure spamassassin's home is present
+- name: ensure spamassassin's directories are present
   file:
     path: "{{ spamassassin_home }}"
     owner: "{{ spamassassin_user }}"
     group: "{{ spamassassin_user }}"
     state: directory
+  with_items:
+    - "{{ spamassassin_home }}"
+    - "{{ spamassassin_bayes_path }}"
 
 - name: ensure spamassassin config is latest
   template:
