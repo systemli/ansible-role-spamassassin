@@ -16,6 +16,7 @@
   with_items:
     - spamassassin
     - spamc
+    - libmail-dkim-perl
 
 - name: ensure spamd group is present
   group:
