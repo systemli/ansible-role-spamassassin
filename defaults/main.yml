@@ -48,7 +48,7 @@ spamassassin_bayes_ignore_header:
   - X-Spam-Status
 
 # Enable additional pyzor check
-spamassassin_pyzor_enabled: False
+spamassassin_pyzor_enabled: True
 
 spamassassin_pyzor_config_dir: /etc/mail/spamassassin/.pyzor/
 
