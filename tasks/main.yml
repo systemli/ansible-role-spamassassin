@@ -59,5 +59,13 @@
     mode: 0644
   notify: restart spamassassin
 
+- name: ensure spamassassin logrotate is latest
+  template:
+    src: logrotate.d/spamd.j2
+    dest: /etc/logrotate.d/spamd
+    owner: root
+    group: root
+    mode: 0644
+
 - include: monit.yml
   when: spamassassin_monit_enabled
