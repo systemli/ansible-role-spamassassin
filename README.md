@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/systemli/spamassassin.svg?branch=master)](https://travis-ci.org/systemli/ansible-role-spamassassin) [![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-spamassassin-blue.svg)](https://galaxy.ansible.com/systemli/spamassassin/)
 
-Role to install & maintain spamassassin
+Role to install & maintain spamassassin (including pyzor)
 
 Role Variables
 --------------
@@ -11,7 +11,7 @@ Defaults:
 
     ## general
     spamassassin_user: spamd
-    spamassassin_home: /var/log/spamassassin/
+    spamassassin_home_dir: /var/log/spamassassin/
     
     ## file: /etc/default/spamassassin
     
@@ -50,7 +50,12 @@ Defaults:
       - X-Bogosity
       - X-Spam-Flag
       - X-Spam-Status
-    
+
+    # Enable additional pyzor check
+    spamassassin_pyzor_enabled: False 
+
+    spamassassin_pyzor_config_dir: /etc/mail/spamassassin/.pyzor/
+ 
     # Enable monit monitoring
     spamassassin_monit_enabled: False
 

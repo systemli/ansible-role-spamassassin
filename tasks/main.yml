@@ -27,18 +27,18 @@
   user:
     name: "{{ spamassassin_user }}"
     shell: /bin/false
-    home: "{{ spamassassin_home }}"
+    home: "{{ spamassassin_home_dir }}"
     groups: spamd
     append: yes
 
 - name: ensure spamassassin's directories are present
   file:
-    path: "{{ spamassassin_home }}"
+    path: "{{ spamassassin_home_dir }}"
     owner: "{{ spamassassin_user }}"
     group: "{{ spamassassin_user }}"
     state: directory
   with_items:
-    - "{{ spamassassin_home }}"
+    - "{{ spamassassin_home_dir }}"
     - "{{ spamassassin_bayes_path }}"
 
 - name: ensure spamassassin config is latest
@@ -66,6 +66,9 @@
     owner: root
     group: root
     mode: 0644
+
+- include: pyzor.yml
+  when: spamassassin_pyzor_enabled
 
 - include: monit.yml
   when: spamassassin_monit_enabled

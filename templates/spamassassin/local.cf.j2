@@ -98,3 +98,10 @@ ifplugin Mail::SpamAssassin::Plugin::Shortcircuit
 # shortcircuit BAYES_00                ham
 
 endif # Mail::SpamAssassin::Plugin::Shortcircuit
+
+{% if spamassassin_pyzor_enabled %}
+use_pyzor 1
+{% else %}
+use_pyzor 0
+{% endif %}
+pyzor_options --homedir {{ spamassassin_pyzor_config_dir }}

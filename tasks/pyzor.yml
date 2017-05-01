@@ -1,0 +1,24 @@
+---
+- name: check if pyzor is already installed
+  stat:
+    path: /usr/bin/pyzor
+  register: pyzor_installed
+
+- name: update apt cache if pyzor is not yet installed
+  apt:
+    update_cache: yes
+  when: pyzor_installed.stat.exists == false
+
+- name: ensure pyzor is installed
+  apt:
+    pkg: "{{ item }}"
+    state: installed
+  with_items:
+    - pyzor
+
+- name: ensure pyzor discovered mail configuration after install
+  command: pyzor --homedir {{ spamassassin_pyzor_config_dir }} discover
+  args:
+    creates: "{{ spamassassin_pyzor_config_dir }}servers"
+  when: pyzor_installed.stat.exists == false
+  notify: restart spamassassin

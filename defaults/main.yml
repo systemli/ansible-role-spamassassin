@@ -1,7 +1,7 @@
 ---
 ## general
 spamassassin_user: spamd
-spamassassin_home: /var/log/spamassassin/
+spamassassin_home_dir: /var/log/spamassassin/
 
 ## file: /etc/default/spamassassin
 
@@ -28,7 +28,7 @@ spamassassin_use_bayes: 1
 spamassassin_bayes_auto_learn: 1
 
 # Where to store bayes db
-spamassassin_bayes_path: "{{ spamassassin_home }}bayes_db"
+spamassassin_bayes_path: "{{ spamassassin_home_dir }}bayes_db"
 
 # Permissions of bayes_db files
 spamassassin_bayes_file_mode: "0777"
@@ -46,6 +46,11 @@ spamassassin_bayes_ignore_header:
   - X-Bogosity
   - X-Spam-Flag
   - X-Spam-Status
+
+# Enable additional pyzor check
+spamassassin_pyzor_enabled: False
+
+spamassassin_pyzor_config_dir: /etc/mail/spamassassin/.pyzor/
 
 # Enable monit monitoring
 spamassassin_monit_enabled: False
