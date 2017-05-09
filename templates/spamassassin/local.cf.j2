@@ -99,9 +99,18 @@ ifplugin Mail::SpamAssassin::Plugin::Shortcircuit
 
 endif # Mail::SpamAssassin::Plugin::Shortcircuit
 
+# Pyzor Config Section
 {% if spamassassin_pyzor_enabled %}
 use_pyzor 1
 {% else %}
 use_pyzor 0
 {% endif %}
 pyzor_options --homedir {{ spamassassin_pyzor_config_dir }}
+
+# Razor Config Section
+{% if spamassassin_razor_enabled %}
+use_razor 1
+{% else %}
+use_razor 0
+{% endif %}
+razor_config {{ spamassassin_razor_config_dir }}

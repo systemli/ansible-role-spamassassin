@@ -3,7 +3,7 @@ ansible-role-spamassassin
 
 [![Build Status](https://travis-ci.org/systemli/spamassassin.svg?branch=master)](https://travis-ci.org/systemli/ansible-role-spamassassin) [![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-spamassassin-blue.svg)](https://galaxy.ansible.com/systemli/spamassassin/)
 
-Role to install & maintain spamassassin (including DKIM and pyzor checks)
+Role to install & maintain spamassassin (including DKIM, pyzor and razor checks)
 
 Role Variables
 --------------
@@ -56,6 +56,11 @@ Defaults:
     spamassassin_pyzor_enabled: False 
 
     spamassassin_pyzor_config_dir: /etc/mail/spamassassin/.pyzor/
+
+    # Enable additional razor chek
+    spamassassin_razor_enabled: True
+    
+    spamassassin_razor_config_dir: /etc/mail/spamassassin/.razor/
  
     # Enable monit monitoring
     spamassassin_monit_enabled: False

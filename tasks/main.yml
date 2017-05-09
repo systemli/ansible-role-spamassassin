@@ -70,5 +70,8 @@
 - include: pyzor.yml
   when: spamassassin_pyzor_enabled
 
+- include: razor.yml
+  when: spamassassin_razor_enabled
+
 - include: monit.yml
   when: spamassassin_monit_enabled
