@@ -109,9 +109,17 @@ pyzor_options --homedir {{ spamassassin_pyzor_config_dir }}
 
 # Razor Config Section
 {% if spamassassin_razor_enabled %}
+{% if ansible_distribution_release == 'jessie' %}
 use_razor 1
+{% elif ansible_distribution_release == 'stretch' %}
+use_razor2 1
+{% endif %}
 {% else %}
+{% if ansible_distribution_release == 'jessie' %}
 use_razor 0
+{% elif ansible_distribution_release == 'stretch' %}
+use_razor2 0
+{% endif %}
 {% endif %}
 razor_config {{ spamassassin_razor_config_dir }}
 
