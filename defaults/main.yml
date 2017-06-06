@@ -59,3 +59,6 @@ spamassassin_razor_config_dir: /etc/mail/spamassassin/.razor/
 
 # Enable monit monitoring
 spamassassin_monit_enabled: False
+
+# manual whitelisting
+spamasssassin_whitelist: []

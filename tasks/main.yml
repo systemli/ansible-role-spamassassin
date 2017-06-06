@@ -59,6 +59,15 @@
     mode: 0644
   notify: restart spamassassin
 
+- name: ensure spamassassin whitelist is latest
+  template:
+    src: spamassassin/whitelist.cf.j2
+    dest: /etc/spamassassin/whitelist.cf
+    owner: root
+    group: root
+    mode: 0644
+  notify: reload spamassassin
+
 - name: ensure spamassassin logrotate is latest
   template:
     src: logrotate.d/spamd.j2

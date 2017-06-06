@@ -4,6 +4,11 @@
     name: spamassassin
     state: restarted
 
+- name: reload spamassassin
+  service:
+    name: spamassassin
+    state: reloaded
+
 - name: restart monit
   service:
     name: monit
