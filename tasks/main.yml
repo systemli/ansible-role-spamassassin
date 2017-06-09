@@ -68,6 +68,15 @@
     mode: 0644
   notify: reload spamassassin
 
+- name: ensure spamassassin ruleupdate cronjob is latest
+  template:
+    src: cron.daily/spamassassin.j2
+    dest: /etc/cron.daily/spamassassin
+    owner: root
+    group: root
+    mode: 0755
+  notify: restart spamassassin
+
 - name: ensure spamassassin logrotate is latest
   template:
     src: logrotate.d/spamd.j2

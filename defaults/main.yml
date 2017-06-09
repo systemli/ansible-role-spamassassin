@@ -47,6 +47,14 @@ spamassassin_bayes_ignore_header:
   - X-Spam-Flag
   - X-Spam-Status
 
+## file: /etc/spamassassin/whitelist.cf
+# manual whitelisting
+spamassassin_whitelist: []
+
+# Add addtional rule update commands, which should be inserted into the cronjob file
+# e.g: "/usr/bin/sa-update --nogpg --channel spamassassin.heinlein-support.de &> /dev/null"
+spamassassin_additional_rules_update_commands: []
+
 # Enable additional pyzor check
 spamassassin_pyzor_enabled: True
 
@@ -60,6 +68,3 @@ spamassassin_razor_config_dir: /etc/mail/spamassassin/.razor/
 # Enable monit monitoring
 spamassassin_monit_enabled: False
 
-## file: /etc/spamassassin/whitelist.cf
-# manual whitelisting
-spamassassin_whitelist: []

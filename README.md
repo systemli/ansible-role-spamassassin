@@ -50,6 +50,14 @@ Defaults:
       - X-Spam-Flag
       - X-Spam-Status
 
+    ## file: /etc/spamassassin/whitelist.cf
+    # manual whitelisting
+    spamassassin_whitelist: []
+
+    # Add addtional rule update commands, which should be inserted into the cronjob file
+    # e.g: "/usr/bin/sa-update --nogpg --channel spamassassin.heinlein-support.de &> /dev/null"
+    spamassassin_additional_rules_update_commands: []
+    
     # Enable additional pyzor check
     spamassassin_pyzor_enabled: False
 
