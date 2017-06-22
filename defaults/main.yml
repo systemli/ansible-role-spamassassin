@@ -51,9 +51,9 @@ spamassassin_bayes_ignore_header:
 # manual whitelisting
 spamassassin_whitelist: []
 
-# Add addtional rule update commands, which should be inserted into the cronjob file
-# e.g: "/usr/bin/sa-update --nogpg --channel spamassassin.heinlein-support.de &> /dev/null"
-spamassassin_additional_rules_update_commands: []
+# Add addtional update channels, which should be updates by the daily
+# sa-update cronjob. E.g. 'spamassassin.heinlein-support.de'
+spamassassin_additional_update_channels: []
 
 # Enable additional pyzor check
 spamassassin_pyzor_enabled: True

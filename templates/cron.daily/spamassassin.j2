@@ -72,15 +72,38 @@ fi
 
 # Update
 umask 022
+{% if spamassassin_additional_update_channels %}
+sa_lintfail=0
+sa_updates=0
+
+{% endif %}
 env -i LANG="$LANG" PATH="$PATH" http_proxy="$http_proxy" \
     start-stop-daemon --chuid debian-spamd:debian-spamd --start \
     --exec /usr/bin/sa-update -- \
-    --gpghomedir /var/lib/spamassassin/sa-update-keys 2>&1 \
-    {% for command in spamassassin_additional_rules_update_commands %}
-    {{ command }} \
-    {% endfor %}
+    --gpghomedir /var/lib/spamassassin/sa-update-keys 2>&1
+{% if spamassassin_additional_update_channels %}
+retcode=$?
+[ $retcode -eq 2 ] && sa_lintfail=1
+[ $retcode -eq 0 ] && sa_updates=1
 
+{%   for channel in spamassassin_additional_update_channels %}
+env -i LANG="$LANG" PATH="$PATH" http_proxy="$http_proxy" \
+    start-stop-daemon --chuid debian-spamd:debian-spamd --start \
+    --exec /usr/bin/sa-update -- \
+    --gpghomedir /var/lib/spamassassin/sa-update-keys \
+    --channel {{ channel }} 2>&1
+retcode_chan=$?
+[ $retcode_chan -eq 2 ] && sa_lintfail=1
+[ $retcode_chan -eq 0 ] && sa_updates=1
+
+{%   endfor %}
+[ $sa_updates -eq 1 ] && retcode=0
+[ $sa_lintfail -eq 1 ] && retcode=2
+
+case $retcode in
+{% else %}
 case $? in
+{% endif %}
     0)
         # got updates!
         env -i LANG="$LANG" PATH="$PATH" start-stop-daemon \
