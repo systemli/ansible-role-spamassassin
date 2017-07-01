@@ -55,7 +55,10 @@ Defaults:
     spamassassin_whitelist: []
 
     # Add addtional update channels, which should be updates by the daily
-    # sa-update cronjob. E.g. 'spamassassin.heinlein-support.de'
+    # sa-update cronjob. E.g.:
+    # spamassassin_additional_update_channels:
+    #   - address: spamassassin.heinlein-support.de
+    #     gpg: no
     spamassassin_additional_update_channels: []
 
     # Enable additional pyzor check

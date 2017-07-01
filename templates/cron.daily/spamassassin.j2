@@ -90,8 +90,12 @@ retcode=$?
 env -i LANG="$LANG" PATH="$PATH" http_proxy="$http_proxy" \
     start-stop-daemon --chuid debian-spamd:debian-spamd --start \
     --exec /usr/bin/sa-update -- \
+{%     if channel.gpg|d() %}
     --gpghomedir /var/lib/spamassassin/sa-update-keys \
-    --channel {{ channel }} 2>&1
+{%     else %}
+    --nogpg \
+{%     endif %}
+    --channel {{ channel.address }} 2>&1
 retcode_chan=$?
 [ $retcode_chan -eq 2 ] && sa_lintfail=1
 [ $retcode_chan -eq 0 ] && sa_updates=1
