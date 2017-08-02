@@ -74,6 +74,18 @@ Defaults:
     # Enable monit monitoring
     spamassassin_monit_enabled: False
 
+    # Enable spam training by users and domain
+    # spamassassin_spamtraining_users:
+    #    - domain: myfirstdomain.org
+    #      users:
+    #       - admin
+    #       - foo
+    #    - domain: myseconddomain.org
+    #      users:
+    #       - admina
+    #       - foobar
+    spamassassin_spamtraining_users: []
+
 ## Download
 
 
