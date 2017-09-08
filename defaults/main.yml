@@ -15,7 +15,8 @@ spamassassin_nice_level: 0
 spamassassin_rewrite_header_enabled: false
 spamassassin_rewrite_header: "Subject *****SPAM*****"
 
-# Allowed 0, 1, 2 - see https://spamassassin.apache.org/full/3.0.x/dist/doc/Mail_SpamAssassin_Conf.html
+# Allowed 0, 1, 2 see
+# https://spamassassin.apache.org/full/3.0.x/dist/doc/Mail_SpamAssassin_Conf.html
 spamassassin_report_safe: 0
 
 # Set the score required before a mail is considered spam
@@ -24,7 +25,8 @@ spamassassin_required_score: 5.0
 # Whether to use the naive-Bayesian-style classifier built into SpamAssassin.
 spamassassin_use_bayes: 1
 
-# Whether to use rules using the naive-Bayesian-style classifier built into SpamAssassin.
+# Whether to use rules using the naive-Bayesian-style classifier
+# built into SpamAssassin.
 spamassassin_bayes_auto_learn: 1
 
 # Where to store bayes db
@@ -39,9 +41,12 @@ spamassassin_trusted_networks: []
 # Allowed: nfsafe, flock, win32
 spamassassin_lock_method: flock
 
-# If you receive mail filtered by upstream mail systems, like a spam-filtering ISP or mailing list,
-# and that service adds new headers (as most of them do), these headers may provide inappropriate cues
-# to the Bayesian classifier, allowing it to take a ``short cut''. To avoid this, list the headers using this setting.
+# If you receive mail filtered by upstream mail systems,
+# like a spam-filtering ISP or mailing list,
+# and that service adds new headers (as most of them do),
+# these headers may provide inappropriate cues
+# to the Bayesian classifier, allowing it to take a
+# ``short cut''. To avoid this, list the headers using this setting.
 spamassassin_bayes_ignore_header:
   - X-Bogosity
   - X-Spam-Flag
