@@ -1,4 +1,4 @@
-check process spamassassin with pidfile /var/run/spamassassin.pid
+check process spamassassin with pidfile {{ spamassassin_pidfile }}
     start program = "/usr/sbin/service spamassassin start" with timeout 60 seconds
     stop program  = "/usr/sbin/service spamassassin stop"
     group server

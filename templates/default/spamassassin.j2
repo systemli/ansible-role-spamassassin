@@ -28,7 +28,7 @@ OPTIONS="--create-prefs --max-children 2 --username spamd \
 # Where should spamd write its PID to file? If you use the -u or
 # --username option above, this needs to be writable by that user.
 # Otherwise, the init script will not be able to shut spamd down.
-PIDFILE="/var/run/spamd.pid"
+PIDFILE="{{ spamassassin_pidfile }}"
 
 # Set nice level of spamd
 {% if spamassassin_nice_level > 0 %}
