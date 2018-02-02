@@ -95,11 +95,11 @@
     - "{{ spamassassin_spamtraining_users }}"
     - users
 
-- import_tasks: pyzor.yml
+- include: pyzor.yml
   when: spamassassin_pyzor_enabled
 
-- import_tasks: razor.yml
+- include: razor.yml
   when: spamassassin_razor_enabled
 
-- import_tasks: monit.yml
+- include: monit.yml
   when: spamassassin_monit_enabled
