@@ -102,18 +102,6 @@ Download latest release with `ansible-galaxy`
 
 
 
-## Testing
-
-Make sure your user is in the `docker` group. To only test your current setup, do
-
-    molecule test
-
-To test different versions of ansible, do
-
-    tox
-
-If your role depends on other roles from [Ansible Galaxy](https://galaxy.ansible.com/), uncomment the dependency lines in `molecule.yml` and add the dependencies in `tests/requirements.yml`.
-
 ## License
 
 GPL
