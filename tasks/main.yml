@@ -1,13 +1,4 @@
 ---
-- name: check if spamassassin is already installed.
-  stat:
-    path: /usr/bin/spamassassin
-  register: spamassassin_installed
-
-- name: update apt cache if spamassassin is not yet installed.
-  apt:
-    update_cache: yes
-  when: spamassassin_installed.stat.exists == false
 
 - name: ensure spamassassin is installed
   apt:

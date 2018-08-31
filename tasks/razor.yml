@@ -4,11 +4,6 @@
     path: /usr/bin/razor-admin
   register: razor_installed
 
-- name: update apt cache if razor is not yet installed
-  apt:
-    update_cache: yes
-  when: razor_installed.stat.exists == false
-
 - name: ensure razor is installed
   apt:
     pkg: "{{ item }}"

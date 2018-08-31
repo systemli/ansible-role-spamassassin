@@ -4,11 +4,6 @@
     path: /usr/bin/pyzor
   register: pyzor_installed
 
-- name: update apt cache if pyzor is not yet installed
-  apt:
-    update_cache: yes
-  when: pyzor_installed.stat.exists == false
-
 - name: ensure pyzor is installed
   apt:
     pkg: "{{ item }}"
