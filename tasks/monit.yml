@@ -1,3 +1,5 @@
+---
+
 - name: ensure monit configs are present
   template:
     src: "monit/conf.d/{{ item }}"
