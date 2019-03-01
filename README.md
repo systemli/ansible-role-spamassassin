@@ -12,6 +12,10 @@ Defaults:
     spamassassin_user: spamd
     spamassassin_home_dir: /var/log/spamassassin/
 
+    # Write spamassassin config files (only install spamassassin and configure
+    # cronjob if set to False)
+    spamassassin_configure: True
+
     ## file: /etc/default/spamassassin
 
     spamassassin_enabled: true

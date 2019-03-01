@@ -9,56 +9,68 @@
     - spamc
     - libmail-dkim-perl
 
-- name: ensure spamd group is present
-  group:
-    name: "{{ spamassassin_user }}"
-    state: present
+- block:
 
-- name: ensure spamd user is present
-  user:
-    name: "{{ spamassassin_user }}"
-    shell: /bin/false
-    home: "{{ spamassassin_home_dir }}"
-    groups: spamd
-    append: yes
+  - name: ensure spamd group is present
+    group:
+      name: "{{ spamassassin_user }}"
+      state: present
+  
+  - name: ensure spamd user is present
+    user:
+      name: "{{ spamassassin_user }}"
+      shell: /bin/false
+      home: "{{ spamassassin_home_dir }}"
+      groups: spamd
+      append: yes
+  
+  - name: ensure spamassassin's directories are present
+    file:
+      path: "{{ spamassassin_home_dir }}"
+      owner: "{{ spamassassin_user }}"
+      group: "{{ spamassassin_user }}"
+      state: directory
+    with_items:
+      - "{{ spamassassin_home_dir }}"
+      - "{{ spamassassin_bayes_path }}"
+  
+  - name: ensure spamassassin config is latest
+    template:
+      src: default/spamassassin.j2
+      dest: /etc/default/spamassassin
+      owner: root
+      group: root
+      mode: 0644
+    notify: restart spamassassin
+  
+  - name: ensure spamassassin default rules file is latest
+    template:
+      src: spamassassin/local.cf.j2
+      dest: /etc/spamassassin/local.cf
+      owner: root
+      group: root
+      mode: 0644
+    notify: restart spamassassin
+  
+  - name: ensure spamassassin whitelist is latest
+    template:
+      src: spamassassin/whitelist.cf.j2
+      dest: /etc/spamassassin/whitelist.cf
+      owner: root
+      group: root
+      mode: 0644
+    notify: reload spamassassin
 
-- name: ensure spamassassin's directories are present
-  file:
-    path: "{{ spamassassin_home_dir }}"
-    owner: "{{ spamassassin_user }}"
-    group: "{{ spamassassin_user }}"
-    state: directory
-  with_items:
-    - "{{ spamassassin_home_dir }}"
-    - "{{ spamassassin_bayes_path }}"
+  - name: ensure spamassassin logrotate is latest
+    template:
+      src: logrotate.d/spamd.j2
+      dest: /etc/logrotate.d/spamd
+      owner: root
+      group: root
+      mode: 0644
 
-- name: ensure spamassassin config is latest
-  template:
-    src: default/spamassassin.j2
-    dest: /etc/default/spamassassin
-    owner: root
-    group: root
-    mode: 0644
-  notify: restart spamassassin
-
-- name: ensure spamassassin default rules file is latest
-  template:
-    src: spamassassin/local.cf.j2
-    dest: /etc/spamassassin/local.cf
-    owner: root
-    group: root
-    mode: 0644
-  notify: restart spamassassin
-
-- name: ensure spamassassin whitelist is latest
-  template:
-    src: spamassassin/whitelist.cf.j2
-    dest: /etc/spamassassin/whitelist.cf
-    owner: root
-    group: root
-    mode: 0644
-  notify: reload spamassassin
-
+  when: spamassassin_configure
+  
 - name: ensure spamassassin ruleupdate cronjob is latest
   template:
     src: cron.daily/spamassassin.j2
@@ -67,14 +79,6 @@
     group: root
     mode: 0755
   notify: restart spamassassin
-
-- name: ensure spamassassin logrotate is latest
-  template:
-    src: logrotate.d/spamd.j2
-    dest: /etc/logrotate.d/spamd
-    owner: root
-    group: root
-    mode: 0644
 
 - name: ensure cronjob for spamtraining is present
   cron:
