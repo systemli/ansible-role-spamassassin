@@ -43,7 +43,8 @@ do_compile() {
         # Fixup perms -- group and other should be able to
         # read and execute, but never write.  Works around
         # sa-compile's failure to obey umask.
-        chmod -R go-w,go+rX /var/lib/spamassassin/compiled
+        runuser -u debian-spamd -- \
+            chmod -R go-w,go+rX /var/lib/spamassassin/compiled
     fi
 }
 
@@ -54,8 +55,7 @@ reload() {
         invoke-rc.d --quiet spamassassin status > /dev/null && \
           invoke-rc.d spamassassin reload > /dev/null
     else
-        invoke-rc.d --quiet spamassassin status > /dev/null && \
-          /etc/init.d/spamassassin reload > /dev/null
+        /etc/init.d/spamassassin reload > /dev/null
     fi
     if [ -d /etc/spamassassin/sa-update-hooks.d ]; then
         run-parts --lsbsysinit /etc/spamassassin/sa-update-hooks.d

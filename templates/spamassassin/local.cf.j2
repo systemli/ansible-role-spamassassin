@@ -16,6 +16,7 @@ rewrite_header {{ spamassassin_rewrite_header }}
 # rewrite_header {{ spamassassin_rewrite_header }}
 {% endif %}
 
+
 #   Save spam messages as a message/rfc822 MIME attachment instead of
 #   modifying the original message (0: off, 2: use text/plain instead)
 #
@@ -54,6 +55,7 @@ bayes_file_mode {{ spamassassin_bayes_file_mode }}
 
 #   Bayesian classifier auto-learning (default: 1)
 #
+bayes_auto_learn 1
 bayes_auto_learn {{ spamassassin_bayes_auto_learn }}
 
 
@@ -63,10 +65,14 @@ bayes_auto_learn {{ spamassassin_bayes_auto_learn }}
 # bayes_ignore_header X-Bogosity
 # bayes_ignore_header X-Spam-Flag
 # bayes_ignore_header X-Spam-Status
-# bayes_auto_learn 1
 {% for header in spamassassin_bayes_ignore_header %}
 bayes_ignore_header {{ header }}
 {% endfor %}
+
+#   Whether to decode non- UTF-8 and non-ASCII textual parts and recode
+#   them to UTF-8 before the text is given over to rules processing.
+#
+# normalize_charset 1
 
 #   Some shortcircuiting, if the plugin is enabled
 #
