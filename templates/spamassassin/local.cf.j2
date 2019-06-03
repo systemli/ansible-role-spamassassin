@@ -129,5 +129,12 @@ use_razor2 0
 {% endif %}
 razor_config {{ spamassassin_razor_config_dir }}
 
+{% if spamassassin_custom_scores %}
+# custom scores
+{% for score in spamassassin_custom_scores %}
+score {{ score.name }} {{ score.score }}
+{% endfor %}
+{% endif %}
+
 # additional config files
 include whitelist.cf
