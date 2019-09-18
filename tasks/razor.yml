@@ -6,10 +6,8 @@
 
 - name: ensure razor is installed
   apt:
-    pkg: "{{ item }}"
+    pkg: razor
     state: present
-  with_items:
-    - razor
 
 - name: ensure razor creates home after install
   command: "{{ item }}"

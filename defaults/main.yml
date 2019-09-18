@@ -99,3 +99,8 @@ spamassassin_spamtraining_users: []
 #    - name: SPF_FAIL
 #      score: "0 1.5 0 0.919"
 spamassassin_custom_scores: []
+
+spamassassin_packages:
+  - spamassassin
+  - spamc
+  - libmail-dkim-perl

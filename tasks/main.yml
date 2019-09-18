@@ -2,12 +2,8 @@
 
 - name: ensure spamassassin is installed
   apt:
-    pkg: "{{ item }}"
+    pkg: "{{ spamassassin_packages }}"
     state: present
-  with_items:
-    - spamassassin
-    - spamc
-    - libmail-dkim-perl
 
 - block:
 
