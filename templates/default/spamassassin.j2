@@ -21,8 +21,8 @@ ENABLED=0
 # make sure --max-children is not set to anything higher than 5,
 # unless you know what you're doing.
 
-OPTIONS="--create-prefs --max-children 2 --username {{ spamassassin_user }}  \
--H {{ spamassassin_home_dir }} -s {{ spamassassin_home_dir }}spamd.log"
+OPTIONS="--create-prefs --max-children 2 --username {{ spamassassin_user }} \
+    -H {{ spamassassin_home_dir }} -s {{ spamassassin_home_dir }}spamd.log"
 
 # Pid file
 # Where should spamd write its PID to file? If you use the -u or
