@@ -1,23 +1,46 @@
 ---
 
+- name: check if spamd user exist
+  shell: "id -u {{ spamassassin_user }}"
+  register: id_cmd
+  # rc=1 is OK, indicates that there is no spamd user
+  failed_when: id_cmd.rc >= 2
+
+- name: stop spamassassin
+  service:
+    name: spamassassin
+    state: stopped
+  failed_when: false  
+  when: id_cmd.rc == 0
+
+- name: Kill running processes for user spamd
+  shell: "killall -u {{ spamassassin_user }}"
+  register: killall_cmd
+  # rc=1 is OK, indicates that there are no processes to be killed
+  failed_when: killall_cmd.rc >= 2
+  when: id_cmd.rc == 0
+
+- name: ensure spamd group is present
+  group:
+    name: "{{ spamassassin_user }}"
+    state: present
+
+- name: ensure spamd user is present
+  user:
+    name: "{{ spamassassin_user }}"
+    # Need to have a shell, otherwise updates in Debian fails
+    shell: /bin/sh
+    home: "{{ spamassassin_home_dir }}"
+    groups: "{{ spamassassin_group }}"
+    append: yes
+
 - name: ensure spamassassin is installed
   apt:
     pkg: "{{ spamassassin_packages }}"
     state: present
 
 - block:
-    - name: ensure spamd group is present
-      group:
-        name: "{{ spamassassin_user }}"
-        state: present
 
-    - name: ensure spamd user is present
-      user:
-        name: "{{ spamassassin_user }}"
-        shell: /bin/false
-        home: "{{ spamassassin_home_dir }}"
-        groups: "{{ spamassassin_group }}"
-        append: yes
 
     - name: ensure spamassassin's directories are present
       file:
