@@ -5,6 +5,7 @@
   register: id_cmd
   # rc=1 is OK, indicates that there is no spamd user
   failed_when: id_cmd.rc >= 2
+  changed_when: false
 
 - name: stop spamassassin
   service:
@@ -18,6 +19,7 @@
   register: killall_cmd
   # rc=1 is OK, indicates that there are no processes to be killed
   failed_when: killall_cmd.rc >= 2
+  changed_when: false
   when: id_cmd.rc == 0
 
 - name: ensure spamd group is present
