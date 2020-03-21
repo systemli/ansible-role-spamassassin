@@ -16,3 +16,4 @@ lint: yamllint .
 provisioner:
   name: ansible
   become: true
+  log: True
