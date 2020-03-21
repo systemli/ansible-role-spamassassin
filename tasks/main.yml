@@ -12,6 +12,7 @@
     name: spamassassin
     state: stopped
   failed_when: false
+  changed_when: false
   when: id_cmd.rc == 0
 
 - name: Kill running processes for user spamd
