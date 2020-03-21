@@ -16,7 +16,7 @@
   when: id_cmd.rc == 0
 
 - name: Kill running processes for user spamd
-  shell: "killall -u {{ spamassassin_user }}"
+  shell: "pkill -u {{ spamassassin_user }}"
   register: killall_cmd
   # rc=1 is OK, indicates that there are no processes to be killed
   failed_when: killall_cmd.rc >= 2
