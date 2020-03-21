@@ -12,5 +12,8 @@ platforms:
 lint: yamllint .
 provisioner:
   name: ansible
+  log: True
+  options:
+    vvv: True
   playbooks:
     converge: ../default/converge.yml
