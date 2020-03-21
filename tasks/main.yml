@@ -31,7 +31,7 @@
 - name: ensure spamd user is present
   user:
     name: "{{ spamassassin_user }}"
-    # Need to have a shell,otherwise updates in Debian fails
+    # Need to have a shell, otherwise updates in Debian fails
     shell: /bin/sh
     home: "{{ spamassassin_home_dir }}"
     groups: "{{ spamassassin_group }}"
