@@ -101,6 +101,7 @@ Defaults:
      - spamassassin
      - spamc
      - libmail-dkim-perl
+     - procps  # provides /bin/kill, should actually be a dependency
 
 ## Download
 
