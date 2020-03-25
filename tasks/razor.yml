@@ -15,15 +15,15 @@
     creates: "{{ spamassassin_razor_config_dir }}"
   with_items:
     - "razor-admin -home={{ spamassassin_razor_config_dir }} -create"
-  when: razor_installed.stat.exists == false
+  when: not razor_installed.stat.exists
   notify: restart spamassassin
 
 - name: ensure razor registers identity after install
   command: "razor-admin -home={{ spamassassin_razor_config_dir }} -register"
-  when: razor_installed.stat.exists == false
+  when: not razor_installed.stat.exists
   notify: restart spamassassin
 
 - name: ensure razor discovers home after install
   command: "razor-admin -home={{ spamassassin_razor_config_dir }} -discover"
-  when: razor_installed.stat.exists == false
+  when: not razor_installed.stat.exists
   notify: restart spamassassin

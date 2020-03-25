@@ -13,5 +13,5 @@
   command: pyzor --homedir {{ spamassassin_pyzor_config_dir }} discover
   args:
     creates: "{{ spamassassin_pyzor_config_dir }}servers"
-  when: pyzor_installed.stat.exists == false
+  when: not pyzor_installed.stat.exists
   notify: restart spamassassin
