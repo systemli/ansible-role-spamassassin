@@ -79,7 +79,7 @@
     name: "Spamassassin enable spamtraining for {{ item[1] }}@{{ item[0].domain }}"
     minute: "0"
     hour: "0"
-    job: "/usr/bin/sa-learn --dbpath {{ spamassassin_home_dir }}bayes_db/ --progress --spam /var/vmail/{{ item[0].domain }}/{{ item[1] }}/Maildir/.Junk > /dev/null 2>&1"
+    job: "/usr/bin/sa-learn --dbpath {{ spamassassin_bayes_path }}/ --progress --spam /var/vmail/{{ item[0].domain }}/{{ item[1] }}/Maildir/.Junk > /dev/null 2>&1"
   with_subelements:
     - "{{ spamassassin_spamtraining_users }}"
     - users
