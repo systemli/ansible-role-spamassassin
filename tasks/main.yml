@@ -16,8 +16,7 @@
         name: "{{ spamassassin_user }}"
         shell: /bin/sh
         home: "{{ spamassassin_home_dir }}"
-        groups: "{{ spamassassin_group }}"
-        append: yes
+        group: "{{ spamassassin_group }}"
 
     - name: ensure spamassassin's directories are present
       file:
