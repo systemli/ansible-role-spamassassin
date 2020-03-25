@@ -10,7 +10,8 @@ Defaults:
 
     ## general
     spamassassin_user: spamd
-    spamassassin_home_dir: /var/log/spamassassin/
+    spamassassin_home_dir: /var/lib/spamassassin/
+    spamassassin_log_dir: /var/log/spamassassin/
 
     # Write spamassassin config files (only install spamassassin and configure
     # cronjob if set to False)
