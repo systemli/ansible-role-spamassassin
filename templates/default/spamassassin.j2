@@ -22,7 +22,7 @@ ENABLED=0
 # unless you know what you're doing.
 
 OPTIONS="--create-prefs --max-children 2 --username {{ spamassassin_user }} \
-    -H {{ spamassassin_home_dir }} -s {{ spamassassin_log_dir }}spamd.log"
+    -H {{ spamassassin_home_dir }} -s {{ spamassassin_log_dir }}/spamd.log"
 
 # Pid file
 # Where should spamd write its PID to file? If you use the -u or

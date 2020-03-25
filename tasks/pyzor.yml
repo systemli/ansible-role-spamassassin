@@ -12,6 +12,6 @@
 - name: ensure pyzor discovered mail configuration after install
   command: pyzor --homedir {{ spamassassin_pyzor_config_dir }} discover
   args:
-    creates: "{{ spamassassin_pyzor_config_dir }}servers"
+    creates: "{{ spamassassin_pyzor_config_dir }}/servers"
   when: not pyzor_installed.stat.exists
   notify: restart spamassassin

@@ -14,7 +14,7 @@
     - name: ensure spamd user is present
       user:
         name: "{{ spamassassin_user }}"
-        shell: /bin/false
+        shell: /bin/sh
         home: "{{ spamassassin_home_dir }}"
         groups: "{{ spamassassin_group }}"
         append: yes

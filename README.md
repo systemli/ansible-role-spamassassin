@@ -9,9 +9,10 @@ Role to install & maintain spamassassin (including DKIM, pyzor and razor checks)
 Defaults:
 
     ## general
-    spamassassin_user: spamd
-    spamassassin_home_dir: /var/lib/spamassassin/
-    spamassassin_log_dir: /var/log/spamassassin/
+    spamassassin_user: debian-spamd
+    spamassassin_group: debian-spamd
+    spamassassin_home_dir: /var/lib/spamassassin
+    spamassassin_log_dir: /var/log/spamassassin
 
     # Write spamassassin config files (only install spamassassin and configure
     # cronjob if set to False)
@@ -69,12 +70,12 @@ Defaults:
     # Enable additional pyzor check
     spamassassin_pyzor_enabled: False
 
-    spamassassin_pyzor_config_dir: /etc/mail/spamassassin/.pyzor/
+    spamassassin_pyzor_config_dir: /etc/mail/spamassassin/.pyzor
 
     # Enable additional razor chek
     spamassassin_razor_enabled: True
 
-    spamassassin_razor_config_dir: /etc/mail/spamassassin/.razor/
+    spamassassin_razor_config_dir: /etc/mail/spamassassin/.razor
 
     # Enable monit monitoring
     spamassassin_monit_enabled: False
