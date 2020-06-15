@@ -20,7 +20,7 @@
 
     - name: ensure spamassassin's directories are present
       file:
-        path: "{{ spamassassin_home_dir }}"
+        path: "{{ item }}"
         owner: "{{ spamassassin_user }}"
         group: "{{ spamassassin_user }}"
         state: directory
