@@ -1,13 +1,9 @@
 ---
-- name: check if razor is already installed
-  stat:
-    path: /usr/bin/razor-admin
-  register: razor_installed
-
 - name: ensure razor is installed
   apt:
     pkg: razor
     state: present
+  register: razor_installed
 
 - name: ensure razor creates home after install
   command: "{{ item }}"
@@ -15,15 +11,15 @@
     creates: "{{ spamassassin_razor_config_dir }}"
   with_items:
     - "razor-admin -home={{ spamassassin_razor_config_dir }} -create"
-  when: not razor_installed.stat.exists
+  when: razor_installed.changed
   notify: restart spamassassin
 
 - name: ensure razor registers identity after install
   command: "razor-admin -home={{ spamassassin_razor_config_dir }} -register"
-  when: not razor_installed.stat.exists
+  when: razor_installed.changed
   notify: restart spamassassin
 
 - name: ensure razor discovers home after install
   command: "razor-admin -home={{ spamassassin_razor_config_dir }} -discover"
-  when: not razor_installed.stat.exists
+  when: razor_installed.changed
   notify: restart spamassassin

@@ -69,12 +69,12 @@ Defaults:
     # Enable additional pyzor check
     spamassassin_pyzor_enabled: False
 
-    spamassassin_pyzor_config_dir: /etc/mail/spamassassin/.pyzor
+    spamassassin_pyzor_config_dir: /etc/spamassassin/.pyzor
 
     # Enable additional razor chek
     spamassassin_razor_enabled: True
 
-    spamassassin_razor_config_dir: /etc/mail/spamassassin/.razor
+    spamassassin_razor_config_dir: /etc/spamassassin/.razor
 
     # Enable monit monitoring
     spamassassin_monit_enabled: False
