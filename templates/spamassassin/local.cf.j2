@@ -12,8 +12,6 @@
 # rewrite_header Subject *****SPAM*****
 {% if spamassassin_rewrite_header_enabled %}
 rewrite_header {{ spamassassin_rewrite_header }}
-{% else %}
-# rewrite_header {{ spamassassin_rewrite_header }}
 {% endif %}
 
 

@@ -44,7 +44,7 @@ do_compile() {
         # read and execute, but never write.  Works around
         # sa-compile's failure to obey umask.
         runuser -u debian-spamd -- \
-            chmod -R go-w,go+rX /var/lib/spamassassin/compiled
+                chmod -R go-w,go+rX /var/lib/spamassassin/compiled
     fi
 }
 

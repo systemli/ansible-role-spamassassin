@@ -4,15 +4,10 @@
 # WARNING: please read README.spamd before using.
 # There may be security risks.
 
-# If you're using systemd (default for jessie), the ENABLED setting is
-# not used. Instead, enable spamd by issuing:
-# systemctl enable spamassassin.service
-# Change to "1" to enable spamd on systems using sysvinit:
-{% if spamassassin_enabled %}
-ENABLED=1
-{% else %}
-ENABLED=0
-{% endif %}
+# Prior to version 3.4.2-1, spamd could be enabled by setting
+# ENABLED=1 in this file. This is no longer supported. Instead, please
+# use the update-rc.d command, invoked for example as "update-rc.d
+# spamassassin enable", to enable the spamd service.
 
 # Options
 # See man spamd for possible options. The -d option is automatically added.

@@ -20,7 +20,6 @@ Defaults:
 
     ## file: /etc/default/spamassassin
 
-    spamassassin_enabled: true
     spamassassin_automatic_rule_update_enabled: true
     spamassassin_nice_level: 0
 
