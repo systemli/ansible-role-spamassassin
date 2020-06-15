@@ -4,6 +4,7 @@ spamassassin_user: debian-spamd
 spamassassin_group: debian-spamd
 spamassassin_home_dir: /var/lib/spamassassin
 spamassassin_log_dir: /var/log/spamassassin
+spamassassin_syslog_facility: "{{ spamassassin_log_dir }}/spamd.log"
 
 # Write spamassassin config files (only install spamassassin and configure
 # cronjob if set to False)
