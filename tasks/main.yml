@@ -23,6 +23,7 @@
         path: "{{ item }}"
         owner: "{{ spamassassin_user }}"
         group: "{{ spamassassin_user }}"
+        mode: 0755
         state: directory
       with_items:
         - "{{ spamassassin_home_dir }}"
