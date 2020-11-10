@@ -16,6 +16,7 @@ jobs:
     strategy:
       matrix:
         distro:
+          - ubuntu2004
           - debian10
           - debian9
           - debian8

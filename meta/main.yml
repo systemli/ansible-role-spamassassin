@@ -16,6 +16,9 @@ galaxy_info:
         - buster
         - jessie
         - stretch
+    - name: Ubuntu
+      versions:
+        - focal
   notifications:
     webhooks: https://galaxy.ansible.com/api/v1/notifications/
 dependencies: []
