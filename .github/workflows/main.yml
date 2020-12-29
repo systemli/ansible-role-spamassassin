@@ -1,5 +1,5 @@
 ---
-name: Molecule
+name: Integration
 on:
   pull_request:
   push:
@@ -11,7 +11,7 @@ on:
 jobs:
 
   test:
-    name: Integration
+    name: Molecule
     runs-on: ubuntu-latest
     strategy:
       matrix:
