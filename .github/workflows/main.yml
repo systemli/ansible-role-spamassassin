@@ -11,7 +11,7 @@ on:
 jobs:
 
   test:
-    name: Molecule
+    name: Integration
     runs-on: ubuntu-latest
     strategy:
       matrix:
