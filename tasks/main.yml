@@ -87,6 +87,8 @@
     - "{{ spamassassin_spamtraining_users }}"
     - users
 
+- include: dmarc.yml
+
 - name: ensure spamassassin is enabled and started
   service:
     name: spamassassin

@@ -106,3 +106,24 @@ spamassassin_packages:
   - spamc
   - libmail-dkim-perl
   - procps  # provides /bin/kill, should actually be a dependency
+
+# enable DMARC checks
+# requires SPF and DKIM checks, which are enabled by default
+spamassassin_dmarc_enabled: true
+spamassassin_dmarc_dependencies:
+  - cpanminus
+  - libconfig-tiny-perl
+  - libfile-sharedir-install-perl
+  - libregexp-common-perl
+  - libnet-dns-perl
+  - libdbd-sqlite3-perl
+  - libdbix-simple-perl
+  - libemail-address-perl
+  - libemail-mime-perl
+  - libemail-sender-perl
+  - libemail-simple-perl
+  - libfile-sharedir-perl
+  - libnet-idn-encode-perl
+  - libtest-file-sharedir-perl
+  - libxml-libxml-perl
+  - make

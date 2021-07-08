@@ -1,0 +1,36 @@
+---
+
+- name: Enable DMARC plugin
+  block:
+    - name: Install DMARC dependencies
+      apt:
+        name: "{{ spamassassin_dmarc_dependencies }}"
+        state: present
+
+    - name: Install DMARC library
+      cpanm:
+        name: "Mail::DMARC::PurePerl"
+        notest: true
+      notify: restart spamassassin
+
+    - name: Get DMARC plugin files
+      get_url:
+        url: "https://github.com/bigio/spamassassin-dmarc/raw/master/{{ item }}"
+        dest: /etc/spamassassin/
+        mode: '0644'
+      with_items:
+        - Dmarc.pm
+        - Dmarc.cf
+        - Dmarc.pre
+      notify: restart spamassassin
+  when: spamassassin_dmarc_enabled
+
+- name: Delete DMARC plugin
+  file:
+    path: "/etc/spamassassin/{{ item }}"
+    state: absent
+  with_items:
+    - Dmarc.pm
+    - Dmarc.cf
+    - Dmarc.pre
+  when: not spamassassin_dmarc_enabled

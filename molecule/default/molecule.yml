@@ -6,8 +6,6 @@ driver:
 platforms:
   - name: buster64
     box: debian/buster64
-  - name: stretch64
-    box: debian/stretch64
 lint: |
   set -e
   yamllint .
