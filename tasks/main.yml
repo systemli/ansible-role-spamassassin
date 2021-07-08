@@ -4,6 +4,7 @@
   apt:
     pkg: "{{ spamassassin_packages }}"
     state: present
+    cache_valid_time: 600
 
 - block:
     - name: ensure spamd group is present
