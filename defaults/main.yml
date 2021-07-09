@@ -111,7 +111,6 @@ spamassassin_packages:
 # requires SPF and DKIM checks, which are enabled by default
 spamassassin_dmarc_enabled: true
 spamassassin_dmarc_dependencies:
-  - cpanminus
   - libconfig-tiny-perl
   - libfile-sharedir-install-perl
   - libregexp-common-perl
@@ -126,4 +125,7 @@ spamassassin_dmarc_dependencies:
   - libnet-idn-encode-perl
   - libtest-file-sharedir-perl
   - libxml-libxml-perl
+
+spamassassin_dmarc_dependencies_build:
+  - cpanminus
   - make

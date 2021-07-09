@@ -6,12 +6,20 @@
       apt:
         name: "{{ spamassassin_dmarc_dependencies }}"
         state: present
+      register: dmarc_install
+
+    - name: Install DMARC build dependencies
+      apt:
+        name: "{{ spamassassin_dmarc_dependencies_build }}"
+      notify: remove build dependencies
+      when: dmarc_install.changed
 
     - name: Install DMARC library
       cpanm:
         name: "Mail::DMARC::PurePerl"
         notest: true
       notify: restart spamassassin
+      when: dmarc_install.changed
 
     - name: Get DMARC plugin files
       get_url:

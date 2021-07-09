@@ -13,3 +13,8 @@
   service:
     name: monit
     state: restarted
+
+- name: remove build dependencies
+  apt:
+    name: "{{ spamassassin_dmarc_dependencies_build }}"
+    state: absent
