@@ -30,11 +30,6 @@ die_with_lint() {
 }
 
 do_compile() {
-# Compile rules if the required tools are available. Prior to version
-# 3.3.2-8, there was an additional check to verify that an sa-compile
-# run had previously been executed by hand. With sa-learn now
-# distributed in a separate, optional, package, this check is no
-# longer necessary.
     if [ -x /usr/bin/re2c -a -x /usr/bin/sa-compile ]; then
         env -i LANG="$LANG" PATH="$PATH" start-stop-daemon \
             --chuid debian-spamd:debian-spamd --start \
