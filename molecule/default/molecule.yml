@@ -4,7 +4,9 @@ driver:
   provider:
     name: virtualbox
 platforms:
-  - name: buster64
+  - name: spamassassin-bullseye64
+    box: debian/bullseye64
+  - name: spamassassin-buster64
     box: debian/buster64
 lint: |
   set -e

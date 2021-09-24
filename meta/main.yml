@@ -14,9 +14,8 @@ galaxy_info:
   platforms:
     - name: Debian
       versions:
+        - bullseye
         - buster
-        - jessie
-        - stretch
   notifications:
     webhooks: https://galaxy.ansible.com/api/v1/notifications/
 dependencies: []
