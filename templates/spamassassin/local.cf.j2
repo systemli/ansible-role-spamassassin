@@ -95,14 +95,14 @@ bayes_ignore_header {{ header }}
 # rawbody_part_scan_size 500000
 
 #   Some shortcircuiting, if the plugin is enabled
-#
+# 
 ifplugin Mail::SpamAssassin::Plugin::Shortcircuit
 #
 #   default: strongly-whitelisted mails are *really* whitelisted now, if the
 #   shortcircuiting plugin is active, causing early exit to save CPU load.
 #   Uncomment to turn this on
 #
-#   SpamAssassin tries hard not to launch DNS queries before priority -100.
+#   SpamAssassin tries hard not to launch DNS queries before priority -100. 
 #   If you want to shortcircuit without launching unneeded queries, make
 #   sure such rule priority is below -100. These examples are already:
 #
