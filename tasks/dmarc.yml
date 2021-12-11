@@ -14,12 +14,15 @@
       notify: remove build dependencies
       when: dmarc_install.changed
 
-    - name: Install DMARC library
+    - name: Install perl modules
       cpanm:
-        name: "Mail::DMARC::PurePerl"
+        name: "{{ item }}"
         notest: true
-      notify: restart spamassassin
+      with_items:
+        - "IO::Compress::Zstd"
+        - "Mail::DMARC::PurePerl"
       when: dmarc_install.changed
+      notify: restart spamassassin
 
     - name: Get DMARC plugin files
       get_url:
@@ -42,3 +45,4 @@
     - Dmarc.cf
     - Dmarc.pre
   when: not spamassassin_dmarc_enabled
+  notify: restart spamassassin

@@ -104,6 +104,7 @@ spamassassin_custom_scores: []
 spamassassin_packages:
   - spamassassin
   - spamc
+  - libmail-spf-perl
   - libmail-dkim-perl
   - procps  # provides /bin/kill, should actually be a dependency
 
@@ -128,4 +129,7 @@ spamassassin_dmarc_dependencies:
 
 spamassassin_dmarc_dependencies_build:
   - cpanminus
+  - gcc
+  - libc6-dev
+  - libextutils-cbuilder-perl
   - make
