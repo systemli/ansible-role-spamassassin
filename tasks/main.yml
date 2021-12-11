@@ -87,7 +87,7 @@
     - "{{ spamassassin_spamtraining_users }}"
     - users
 
-- include: dmarc.yml
+- include_tasks: dmarc.yml
 
 - name: ensure spamassassin is enabled and started
   service:
@@ -95,11 +95,11 @@
     enabled: True
     state: started
 
-- include: pyzor.yml
+- include_tasks: pyzor.yml
   when: spamassassin_pyzor_enabled
 
-- include: razor.yml
+- include_tasks: razor.yml
   when: spamassassin_razor_enabled
 
-- include: monit.yml
+- include_tasks: monit.yml
   when: spamassassin_monit_enabled
