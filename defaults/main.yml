@@ -113,20 +113,20 @@ spamassassin_packages:
 spamassassin_dmarc_enabled: true
 spamassassin_dmarc_dependencies:
   - libconfig-tiny-perl
-  - libfile-sharedir-install-perl
-  - libregexp-common-perl
-  - libnet-dns-perl
   - libdbd-sqlite3-perl
   - libdbix-simple-perl
   - libemail-address-perl
   - libemail-mime-perl
   - libemail-sender-perl
   - libemail-simple-perl
+  - libfile-sharedir-install-perl
   - libfile-sharedir-perl
+  - libio-compress-lzma-perl
+  - libnet-dns-perl
   - libnet-idn-encode-perl
+  - libregexp-common-perl
   - libtest-file-sharedir-perl
   - libxml-libxml-perl
-  - libio-compress-lzma-perl
 
 spamassassin_dmarc_dependencies_build:
   - cpanminus
