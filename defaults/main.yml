@@ -126,6 +126,7 @@ spamassassin_dmarc_dependencies:
   - libnet-idn-encode-perl
   - libtest-file-sharedir-perl
   - libxml-libxml-perl
+  - libio-compress-lzma-perl
 
 spamassassin_dmarc_dependencies_build:
   - cpanminus
