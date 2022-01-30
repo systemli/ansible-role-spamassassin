@@ -1,6 +1,6 @@
 # ansible-role-spamassassin
 
-[![Build Status](https://github.com/systemli/ansible-role-spamassassin/workflows/Integration/badge.svg?branch=master)](https://github.com/systemli/ansible-role-spamassassin/actions?query=workflow%3AIntegration)
+[![Build Status](https://github.com/systemli/ansible-role-spamassassin/workflows/Integration/badge.svg?branch=main)](https://github.com/systemli/ansible-role-spamassassin/actions?query=workflow%3AIntegration)
 [![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-spamassassin-blue.svg)](https://galaxy.ansible.com/systemli/spamassassin/)
 
 Role to install & maintain spamassassin (including DKIM, pyzor and razor checks)
