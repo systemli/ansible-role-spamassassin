@@ -1,12 +1,12 @@
 ---
-
 - name: ensure spamassassin is installed
   apt:
     pkg: "{{ spamassassin_packages }}"
     state: present
     cache_valid_time: 600
 
-- block:
+- name: Basic configuration
+  block:
     - name: ensure spamd group is present
       group:
         name: "{{ spamassassin_user }}"
@@ -82,7 +82,7 @@
     minute: "0"
     hour: "0"
     job: "/usr/bin/sa-learn --dbpath {{ spamassassin_bayes_path }}/ --progress \
- --spam /var/vmail/{{ item[0].domain }}/{{ item[1] }}/Maildir/.Junk > /dev/null 2>&1"
+      --spam /var/vmail/{{ item[0].domain }}/{{ item[1] }}/Maildir/.Junk > /dev/null 2>&1"
   with_subelements:
     - "{{ spamassassin_spamtraining_users }}"
     - users
