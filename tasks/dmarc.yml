@@ -1,4 +1,13 @@
 ---
+# There was an upstream change to upper case file names
+- name: Delete former DMARC plugin files
+  file:
+    path: "/etc/spamassassin/{{ item }}"
+    state: absent
+  with_items:
+    - Dmarc.pm
+    - Dmarc.cf
+    - Dmarc.pre
 
 - name: Enable DMARC plugin
   block:
@@ -30,9 +39,9 @@
         dest: /etc/spamassassin/
         mode: '0644'
       with_items:
-        - Dmarc.pm
-        - Dmarc.cf
-        - Dmarc.pre
+        - DMARC.pm
+        - DMARC.cf
+        - DMARC.pre
       notify: restart spamassassin
   when: spamassassin_dmarc_enabled
 
@@ -41,8 +50,8 @@
     path: "/etc/spamassassin/{{ item }}"
     state: absent
   with_items:
-    - Dmarc.pm
-    - Dmarc.cf
-    - Dmarc.pre
+    - DMARC.pm
+    - DMARC.cf
+    - DMARC.pre
   when: not spamassassin_dmarc_enabled
   notify: restart spamassassin
