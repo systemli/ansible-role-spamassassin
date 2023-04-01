@@ -87,7 +87,8 @@
     - "{{ spamassassin_spamtraining_users }}"
     - users
 
-- include_tasks: dmarc.yml
+- name: Import DMARC tasks
+  import_tasks: dmarc.yml
 
 - name: ensure spamassassin is enabled and started
   service:
@@ -95,11 +96,14 @@
     enabled: True
     state: started
 
-- include_tasks: pyzor.yml
+- name: Import pyzor tasks
+  import_tasks: pyzor.yml
   when: spamassassin_pyzor_enabled
 
-- include_tasks: razor.yml
+- name: Import razor tasks
+  import_tasks: razor.yml
   when: spamassassin_razor_enabled
 
-- include_tasks: monit.yml
+- name: Import monit tasks
+  import_tasks: monit.yml
   when: spamassassin_monit_enabled
