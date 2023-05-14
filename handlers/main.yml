@@ -1,20 +1,20 @@
 ---
-- name: restart spamassassin
+- name: Restart spamassassin
   service:
     name: spamassassin
     state: restarted
 
-- name: reload spamassassin
+- name: Reload spamassassin
   service:
     name: spamassassin
     state: reloaded
 
-- name: restart monit
+- name: Restart monit
   service:
     name: monit
     state: restarted
 
-- name: remove build dependencies
+- name: Remove build dependencies
   apt:
     name: "{{ spamassassin_dmarc_dependencies_build }}"
     state: absent
