@@ -1,6 +1,6 @@
 ---
 
-- name: ensure monit configs are present
+- name: Ensure monit configs are present
   template:
     src: "monit/conf.d/{{ item }}"
     dest: "/etc/monit/conf.d/{{ item }}"
@@ -9,4 +9,4 @@
     mode: 0600
   with_items:
     - spamassassin
-  notify: restart monit
+  notify: Restart monit

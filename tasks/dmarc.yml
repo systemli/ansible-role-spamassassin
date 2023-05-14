@@ -10,6 +10,7 @@
     - Dmarc.pre
 
 - name: Enable DMARC plugin
+  when: spamassassin_dmarc_enabled
   block:
     - name: Install DMARC dependencies
       apt:
@@ -20,18 +21,18 @@
     - name: Install DMARC build dependencies
       apt:
         name: "{{ spamassassin_dmarc_dependencies_build }}"
-      notify: remove build dependencies
+      notify: Remove build dependencies
       when: dmarc_install.changed
 
     - name: Install perl modules
-      cpanm:
+      community.general.cpanm:
         name: "{{ item }}"
         notest: true
       with_items:
         - "IO::Compress::Zstd"
         - "Mail::DMARC::PurePerl"
       when: dmarc_install.changed
-      notify: restart spamassassin
+      notify: Restart spamassassin
 
     - name: Get DMARC plugin files
       get_url:
@@ -42,8 +43,7 @@
         - DMARC.pm
         - DMARC.cf
         - DMARC.pre
-      notify: restart spamassassin
-  when: spamassassin_dmarc_enabled
+      notify: Restart spamassassin
 
 - name: Delete DMARC plugin
   file:
@@ -54,4 +54,4 @@
     - DMARC.cf
     - DMARC.pre
   when: not spamassassin_dmarc_enabled
-  notify: restart spamassassin
+  notify: Restart spamassassin
