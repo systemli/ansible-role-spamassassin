@@ -5,7 +5,7 @@
     state: present
   register: razor_installed
 
-- name: Ensure razor creates home after install  # noqa no-handler
+- name: Ensure razor creates home after install  # noqa no-changed-when no-handler
   command: "{{ item }}"
   args:
     creates: "{{ spamassassin_razor_config_dir }}"
@@ -14,12 +14,12 @@
   when: razor_installed.changed
   notify: Restart spamassassin
 
-- name: Ensure razor registers identity after install  # noqa no-handler
+- name: Ensure razor registers identity after install  # noqa no-changed-when no-handler
   command: "razor-admin -home={{ spamassassin_razor_config_dir }} -register"
   when: razor_installed.changed
   notify: Restart spamassassin
 
-- name: Ensure razor discovers home after install  # noqa no-handler
+- name: Ensure razor discovers home after install  # noqa no-changed-when no-handler
   command: "razor-admin -home={{ spamassassin_razor_config_dir }} -discover"
   when: razor_installed.changed
   notify: Restart spamassassin

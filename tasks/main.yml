@@ -6,6 +6,7 @@
     cache_valid_time: 600
 
 - name: Basic configuration
+  when: spamassassin_configure
   block:
     - name: Ensure spamd group is present
       group:
@@ -65,7 +66,6 @@
         owner: root
         group: root
         mode: 0644
-  when: spamassassin_configure
 
 - name: Ensure spamassassin ruleupdate cronjob is latest
   template:

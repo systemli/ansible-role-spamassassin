@@ -18,13 +18,13 @@
         state: present
       register: dmarc_install
 
-    - name: Install DMARC build dependencies
+    - name: Install DMARC build dependencies  # noqa no-handler
       apt:
         name: "{{ spamassassin_dmarc_dependencies_build }}"
       notify: Remove build dependencies
       when: dmarc_install.changed
 
-    - name: Install perl modules
+    - name: Install perl modules  # noqa no-handler
       community.general.cpanm:
         name: "{{ item }}"
         notest: true
