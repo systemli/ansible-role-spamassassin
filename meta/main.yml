@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: spamassasin
+  role_name: spamassassin
   author: systemli
   description: Install and maintain spamassassin. Contains tests for Molecule.
   company: systemli.org
