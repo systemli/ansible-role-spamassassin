@@ -91,14 +91,14 @@ Defaults:
     #       - admina
     #       - foobar
     spamassassin_spamtraining_users: []
-   
-   # Set custom spamassassin scores
-   # spamassassin_custom_scores:
-   #    - name: SPF_FAIL
-   #      score: "0 1.5 0 0.919"
-   spamassassin_custom_scores: []
-   
-   spamassassin_packages:
+
+    # Set custom spamassassin scores
+    # spamassassin_custom_scores:
+    #    - name: SPF_FAIL
+    #      score: "0 1.5 0 0.919"
+    spamassassin_custom_scores: []
+
+    spamassassin_packages:
      - spamassassin
      - spamc
      - libmail-dkim-perl
