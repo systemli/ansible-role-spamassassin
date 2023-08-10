@@ -95,14 +95,14 @@ bayes_ignore_header {{ header }}
 # rawbody_part_scan_size 500000
 
 #   Some shortcircuiting, if the plugin is enabled
-# 
+#
 ifplugin Mail::SpamAssassin::Plugin::Shortcircuit
 #
 #   default: strongly-whitelisted mails are *really* whitelisted now, if the
 #   shortcircuiting plugin is active, causing early exit to save CPU load.
 #   Uncomment to turn this on
 #
-#   SpamAssassin tries hard not to launch DNS queries before priority -100. 
+#   SpamAssassin tries hard not to launch DNS queries before priority -100.
 #   If you want to shortcircuit without launching unneeded queries, make
 #   sure such rule priority is below -100. These examples are already:
 #
@@ -139,17 +139,9 @@ pyzor_options --homedir {{ spamassassin_pyzor_config_dir }}
 
 # Razor Config Section
 {% if spamassassin_razor_enabled %}
-{% if ansible_distribution_major_version|int <= 8 %}
-use_razor 1
-{% elif ansible_distribution_major_version|int >= 9 %}
 use_razor2 1
-{% endif %}
 {% else %}
-{% if ansible_distribution_major_version|int <= 8 %}
-use_razor 0
-{% elif ansible_distribution_major_version|int >= 9 %}
 use_razor2 0
-{% endif %}
 {% endif %}
 razor_config {{ spamassassin_razor_config_dir }}
 
