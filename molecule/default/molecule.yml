@@ -8,3 +8,9 @@ platforms:
     box: debian/bullseye64
   - name: spamassassin-bookworm64
     box: debian/bookworm64
+
+provisioner:
+  name: ansible
+  ansible_args:
+    - --diff
+  become: true
