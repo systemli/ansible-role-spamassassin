@@ -1,9 +1,27 @@
 ---
-- name: Ensure spamassassin is installed
+- name: Ensure spamassassin packages are installed
   apt:
     pkg: "{{ spamassassin_packages }}"
     state: present
     cache_valid_time: 600
+
+- name: Gather list of installed packages
+  ansible.builtin.package_facts:
+    manager: apt
+
+- name: Gather if spamassassin >= 4.0.0-1 is installed
+  ansible.builtin.set_fact:
+    spamassassin_v4: "{{ True if ansible_facts.packages.spamassassin[0].version is version('4.0.0-1', '>=') else False }}"
+
+- name: Ensure spamd is installed
+  apt:
+    pkg: spamd
+    state: present
+  when: spamassassin_v4
+
+- name: Set name for spamassassin daemon
+  ansible.builtin.set_fact:
+    spamassassin_daemon: "{{ 'spamd' if spamassassin_v4 else 'spamassassin' }}"
 
 - name: Basic configuration
   when: spamassassin_configure
@@ -38,7 +56,7 @@
         owner: root
         group: root
         mode: 0644
-      notify: Restart spamassassin
+      notify: Restart {{ spamassassin_daemon }}
 
     - name: Ensure spamassassin default rules file is latest
       template:
@@ -47,7 +65,7 @@
         owner: root
         group: root
         mode: 0644
-      notify: Restart spamassassin
+      notify: Restart {{ spamassassin_daemon }}
 
     - name: Ensure spamassassin whitelist is latest
       template:
@@ -56,7 +74,7 @@
         owner: root
         group: root
         mode: 0644
-      notify: Reload spamassassin
+      notify: Reload {{ spamassassin_daemon }}
 
     - name: Ensure spamassassin logrotate is latest
       template:
@@ -67,13 +85,26 @@
         mode: 0644
 
 - name: Ensure spamassassin ruleupdate cronjob is latest
+  when: not spamassassin_v4
   template:
-    src: cron.daily/spamassassin.j2
+    src: cron.daily/spamassassin_v3.j2
     dest: /etc/cron.daily/spamassassin
     owner: root
     group: root
     mode: 0755
   notify: Restart spamassassin
+
+- name: Ensure spamassassin ruleupdate maintenance script is latest
+  when: spamassassin_v4
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0755
+  loop:
+    - { src: 'cron.daily/spamassassin_v4', dest: '/etc/cron.daily/spamassassin' }
+    - { src: 'spamassassin/spamassassin-maint.j2', dest: '/usr/sbin/spamassassin-maint'}
 
 - name: Ensure cronjob for spamtraining is present
   cron:
@@ -89,11 +120,18 @@
 - name: Import DMARC tasks
   import_tasks: dmarc.yml
 
-- name: Ensure spamassassin is enabled and started
+- name: Ensure spamassassin daemon is enabled and started
   service:
-    name: spamassassin
+    name: "{{ spamassassin_daemon }}"
     enabled: True
     state: started
+
+- name: Ensure systemd timer for maintenance script is enabled
+  service:
+    name: spamassassin-maintenance.timer
+    enabled: True
+    state: started
+  when: spamassassin_v4
 
 - name: Import pyzor tasks
   import_tasks: pyzor.yml

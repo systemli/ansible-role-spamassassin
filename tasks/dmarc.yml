@@ -32,7 +32,7 @@
         - "IO::Compress::Zstd"
         - "Mail::DMARC::PurePerl"
       when: dmarc_install.changed
-      notify: Restart spamassassin
+      notify: Restart {{ spamassassin_daemon }}
 
     - name: Get DMARC plugin files
       get_url:
@@ -43,7 +43,7 @@
         - DMARC.pm
         - DMARC.cf
         - DMARC.pre
-      notify: Restart spamassassin
+      notify: Restart {{ spamassassin_daemon }}
 
 - name: Delete DMARC plugin
   file:
@@ -54,4 +54,4 @@
     - DMARC.cf
     - DMARC.pre
   when: not spamassassin_dmarc_enabled
-  notify: Restart spamassassin
+  notify: Restart {{ spamassassin_daemon }}

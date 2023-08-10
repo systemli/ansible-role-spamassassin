@@ -5,6 +5,6 @@ missingok
 notifempty
 delaycompress
 postrotate
-   /usr/sbin/service spamassassin restart
+   /usr/sbin/service {{ spamassassin_daemon }} restart
 endscript
 }

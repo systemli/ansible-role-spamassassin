@@ -14,4 +14,4 @@
   args:
     creates: "{{ spamassassin_pyzor_config_dir }}/servers"
   when: not pyzor_installed.stat.exists
-  notify: Restart spamassassin
+  notify: Restart {{ spamassassin_daemon }}

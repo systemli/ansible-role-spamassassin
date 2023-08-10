@@ -12,14 +12,14 @@
   with_items:
     - "razor-admin -home={{ spamassassin_razor_config_dir }} -create"
   when: razor_installed.changed
-  notify: Restart spamassassin
+  notify: Restart {{ spamassassin_daemon }}
 
 - name: Ensure razor registers identity after install  # noqa no-changed-when no-handler
   command: "razor-admin -home={{ spamassassin_razor_config_dir }} -register"
   when: razor_installed.changed
-  notify: Restart spamassassin
+  notify: Restart {{ spamassassin_daemon }}
 
 - name: Ensure razor discovers home after install  # noqa no-changed-when no-handler
   command: "razor-admin -home={{ spamassassin_razor_config_dir }} -discover"
   when: razor_installed.changed
-  notify: Restart spamassassin
+  notify: Restart {{ spamassassin_daemon }}
