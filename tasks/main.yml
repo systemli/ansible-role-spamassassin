@@ -19,9 +19,11 @@
     state: present
   when: spamassassin_v4
 
-- name: Set name for spamassassin daemon
+- name: Set variables depending von spamassassin version
   ansible.builtin.set_fact:
     spamassassin_daemon: "{{ 'spamd' if spamassassin_v4 else 'spamassassin' }}"
+    welcomelist: "{{ 'welcomelist' if spamassassin_v4 else 'whitelist' }}"
+    blocklist: "{{ 'blocklist' if spamassassin_v4 else 'blacklist' }}"
 
 - name: Basic configuration
   when: spamassassin_configure
@@ -67,10 +69,10 @@
         mode: 0644
       notify: Restart {{ spamassassin_daemon }}
 
-    - name: Ensure spamassassin whitelist is latest
+    - name: Ensure spamassassin whitelist/welcomelist is latest
       template:
-        src: spamassassin/whitelist.cf.j2
-        dest: /etc/spamassassin/whitelist.cf
+        src: spamassassin/welcomelist.cf.j2
+        dest: "/etc/spamassassin/{{ welcomelist }}.cf"
         owner: root
         group: root
         mode: 0644

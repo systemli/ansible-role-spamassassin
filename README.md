@@ -56,8 +56,10 @@ Defaults:
       - X-Spam-Flag
       - X-Spam-Status
 
-    ## file: /etc/spamassassin/whitelist.cf
-    # manual whitelisting
+    # manual welcomelisting/whitelisting
+    # In spamassassin 4.0.0 whitelist has been renamed to welcomelist and blacklist to blocklist, see
+    # https://cwiki.apache.org/confluence/display/spamassassin/WelcomelistBlocklist
+    ## file: /etc/spamassassin/whitelist.cf resp. /etc/spamassassin/welcomelist.cf
     spamassassin_whitelist: []
 
     # Add addtional update channels, which should be updates by the daily
