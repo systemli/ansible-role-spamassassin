@@ -59,11 +59,13 @@ spamassassin_bayes_ignore_header:
   - X-Spam-Flag
   - X-Spam-Status
 
-# manual welcomelisting/whitelisting
+# manual welcomelisting
 # In spamassassin 4.0.0 whitelist has been renamed to welcomelist and blacklist to blocklist, see
 # https://cwiki.apache.org/confluence/display/spamassassin/WelcomelistBlocklist
+# the role variable spamassassin_whitelist has been renamed to spamassassin_welcomelist accordingly.
+# If spamassassin_whitelist is set in host vars and non-empty, it will be merged with spamassassin_welcomelist
 ## file: /etc/spamassassin/whitelist.cf resp. /etc/spamassassin/welcomelist.cf
-spamassassin_whitelist: []
+spamassassin_welcomelist: []
 
 # Add addtional update channels, which should be updates by the daily
 # sa-update cronjob. E.g.:

@@ -1,6 +1,6 @@
 # manual {{ welcomelist }}ing
 # {{ ansible_managed }}
 
-{% for pattern in spamassassin_whitelist %}
+{% for pattern in spamassassin_welcomelist %}
 {{ welcomelist }}_from {{ pattern }}
 {% endfor %}

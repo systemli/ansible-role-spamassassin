@@ -25,6 +25,16 @@
     welcomelist: "{{ 'welcomelist' if spamassassin_v4 else 'whitelist' }}"
     blocklist: "{{ 'blocklist' if spamassassin_v4 else 'blacklist' }}"
 
+- name: Check if legacy var spamassassin_whitelist is set and non empty
+  when: (spamassassin_whitelist is defined) and (spamassassin_whitelist|length > 0)
+  block:
+    - name: Merge spamassassin_whitelist and spamassassin_welcomelist
+      ansible.builtin.set_fact:
+        spamassassin_welcomelist: "{{ spamassassin_whitelist +  spamassassin_welcomelist }}"
+    - name: Print info
+      ansible.builtin.debug:
+        msg: "INFO: Variables 'spamassassin_whitelist' and 'spamassassin_wecomelist' are both set and 'spamassassin_whitelist' is non-empty.\nMerging variable contents.\nSee README.md for further information."
+
 - name: Basic configuration
   when: spamassassin_configure
   block:
