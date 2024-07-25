@@ -98,7 +98,7 @@ retcode=$?
 [ $retcode -eq 0 ] && sa_updates=1
 {%   for channel in spamassassin_additional_update_channels %}
 env -i LANG="$LANG" PATH="$PATH" http_proxy="$http_proxy" \
-    start-stop-daemon --chuid debian-spamd:debian-spamd --sta
+    start-stop-daemon --chuid debian-spamd:debian-spamd --start \
     --exec /usr/bin/sa-update -- \
 {%     if channel.gpg|d() %}
     --gpghomedir /var/lib/spamassassin/sa-update-keys \
