@@ -26,6 +26,27 @@ rewrite_header {{ spamassassin_rewrite_header }}
 # report_safe 1
 report_safe {{ spamassassin_report_safe }}
 
+##########################################################################
+# Headers to be added to mail (can be overriden by users in
+# ~/.spamassassin/user_prefs)
+# Make sure the header stays entirely on one line here
+
+clear_headers
+
+#X-Spam-Checker-Version: SpamAssassin 1.188-2003-05-24-exp on machine.example.org
+add_header all Checker-Version SpamAssassin _SUBVERSION_ on _HOSTNAME_
+
+#X-Spam-Flag: YES
+add_header spam Flag _YESNOCAPS_
+
+#X-Spam-Level: *************
+add_header all Level _STARS(*)_
+
+#X-Spam-Status: Yes, score=14.0 required=5.0 autolearn=spam
+add_header all Status "_YESNO_, score=_SCORE_ required=_REQD_ autolearn=_AUTOLEARN_"
+
+# X-Spam-Report: Terse report of tests hit
+add_header all Report _REPORT_
 
 #   Set which networks or hosts are considered 'trusted' by your mail
 #   server (i.e. not spammers)
