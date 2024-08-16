@@ -34,7 +34,7 @@ report_safe {{ spamassassin_report_safe }}
 clear_headers
 
 #X-Spam-Checker-Version: SpamAssassin 1.188-2003-05-24-exp on machine.example.org
-add_header all Checker-Version SpamAssassin _SUBVERSION_ on _HOSTNAME_
+add_header all Checker-Version SpamAssassin _VERSION_ on _HOSTNAME_
 
 #X-Spam-Flag: YES
 add_header spam Flag _YESNOCAPS_
