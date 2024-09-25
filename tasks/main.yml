@@ -87,9 +87,6 @@
     - "{{ spamassassin_spamtraining_users }}"
     - users
 
-- name: Import DMARC tasks
-  import_tasks: dmarc.yml
-
 - name: Ensure spamassassin daemon is enabled and started
   service:
     name: spamd
