@@ -56,6 +56,17 @@ add_header all Report _REPORT_
 trusted_networks {{ network }}
 {% endfor %}
 
+#   Whether DNS resolving is available or isn't
+# dns_available yes
+dns_available {{ spamassassin_dns_available }}
+
+#   Which DNS servers to use
+# dns_server 127.0.0.1
+{% if spamassassin_dns_servers %}
+{% for dns_server in spamassassin_dns_servers %}
+dns_server {{ dns_server }}
+{% endfor %}
+{% endif %}
 
 #   Set file-locking method (flock is not safe over NFS, but is faster)
 #
