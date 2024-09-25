@@ -1,20 +1,4 @@
 ---
-- name: Prepare backports for Bullseye
-  hosts: spamassassin-bullseye64-backports
-  become: True
-  tasks:
-    - name: Add backports repository
-      ansible.builtin.apt_repository:
-        repo: deb http://deb.debian.org/debian bullseye-backports main
-        state: present
-    - name: Pin spamassassin package
-      copy:
-        dest: /etc/apt/preferences.d/99bullseye-backports
-        content: |
-               Package: spamassassin
-               Pin: release a=bullseye-backports
-               Pin-Priority: 900
-
 - name: Prepare
   hosts: all
   become: True

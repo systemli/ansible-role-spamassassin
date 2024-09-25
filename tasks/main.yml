@@ -5,36 +5,6 @@
     state: present
     cache_valid_time: 600
 
-- name: Gather list of installed packages
-  ansible.builtin.package_facts:
-    manager: apt
-
-- name: Gather if spamassassin >= 4.0.0-1 is installed
-  ansible.builtin.set_fact:
-    spamassassin_v4: "{{ True if ansible_facts.packages.spamassassin[0].version is version('4.0.0-1', '>=') else False }}"
-
-- name: Ensure spamd is installed
-  apt:
-    pkg: spamd
-    state: present
-  when: spamassassin_v4
-
-- name: Set variables depending von spamassassin version
-  ansible.builtin.set_fact:
-    spamassassin_daemon: "{{ 'spamd' if spamassassin_v4 else 'spamassassin' }}"
-    welcomelist: "{{ 'welcomelist' if spamassassin_v4 else 'whitelist' }}"
-    blocklist: "{{ 'blocklist' if spamassassin_v4 else 'blacklist' }}"
-
-- name: Check if legacy var spamassassin_whitelist is set and non empty
-  when: (spamassassin_whitelist is defined) and (spamassassin_whitelist|length > 0)
-  block:
-    - name: Merge spamassassin_whitelist and spamassassin_welcomelist
-      ansible.builtin.set_fact:
-        spamassassin_welcomelist: "{{ spamassassin_whitelist +  spamassassin_welcomelist }}"
-    - name: Print info
-      ansible.builtin.debug:
-        msg: "INFO: Variables 'spamassassin_whitelist' and 'spamassassin_wecomelist' are both set and 'spamassassin_whitelist' is non-empty.\nMerging variable contents.\nSee README.md for further information."
-
 - name: Basic configuration
   when: spamassassin_configure
   block:
@@ -68,7 +38,7 @@
         owner: root
         group: root
         mode: 0644
-      notify: Restart {{ spamassassin_daemon }}
+      notify: Restart spamd
 
     - name: Ensure spamassassin default rules file is latest
       template:
@@ -77,16 +47,16 @@
         owner: root
         group: root
         mode: 0644
-      notify: Restart {{ spamassassin_daemon }}
+      notify: Restart spamd
 
-    - name: Ensure spamassassin whitelist/welcomelist is latest
+    - name: Ensure spamassassin welcomelist is latest
       template:
         src: spamassassin/welcomelist.cf.j2
-        dest: "/etc/spamassassin/{{ welcomelist }}.cf"
+        dest: "/etc/spamassassin/welcomelist.cf"
         owner: root
         group: root
         mode: 0644
-      notify: Reload {{ spamassassin_daemon }}
+      notify: Reload spamd
 
     - name: Ensure spamassassin logrotate is latest
       template:
@@ -96,18 +66,7 @@
         group: root
         mode: 0644
 
-- name: Ensure spamassassin ruleupdate cronjob is latest
-  when: not spamassassin_v4
-  template:
-    src: cron.daily/spamassassin_v3.j2
-    dest: /etc/cron.daily/spamassassin
-    owner: root
-    group: root
-    mode: 0755
-  notify: Restart spamassassin
-
 - name: Ensure spamassassin ruleupdate maintenance script is latest
-  when: spamassassin_v4
   template:
     src: "{{ item.src }}"
     dest: "{{ item.dest }}"
@@ -115,7 +74,6 @@
     group: root
     mode: 0755
   loop:
-    - { src: 'cron.daily/spamassassin_v4', dest: '/etc/cron.daily/spamassassin' }
     - { src: 'spamassassin/spamassassin-maint.j2', dest: '/usr/sbin/spamassassin-maint'}
 
 - name: Ensure cronjob for spamtraining is present
@@ -129,12 +87,9 @@
     - "{{ spamassassin_spamtraining_users }}"
     - users
 
-- name: Import DMARC tasks
-  import_tasks: dmarc.yml
-
 - name: Ensure spamassassin daemon is enabled and started
   service:
-    name: "{{ spamassassin_daemon }}"
+    name: spamd
     enabled: True
     state: started
 
@@ -143,7 +98,6 @@
     name: spamassassin-maintenance.timer
     enabled: True
     state: started
-  when: spamassassin_v4
 
 - name: Import pyzor tasks
   import_tasks: pyzor.yml
