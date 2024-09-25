@@ -4,10 +4,6 @@ driver:
   provider:
     name: virtualbox
 platforms:
-  - name: spamassassin-bullseye64
-    box: debian/bullseye64
-  - name: spamassassin-bullseye64-backports
-    box: debian/bullseye64
   - name: spamassassin-bookworm64
     box: debian/bookworm64
 

@@ -60,11 +60,6 @@ spamassassin_bayes_ignore_header:
   - X-Spam-Status
 
 # manual welcomelisting
-# In spamassassin 4.0.0 whitelist has been renamed to welcomelist and blacklist to blocklist, see
-# https://cwiki.apache.org/confluence/display/spamassassin/WelcomelistBlocklist
-# the role variable spamassassin_whitelist has been renamed to spamassassin_welcomelist accordingly.
-# If spamassassin_whitelist is set in host vars and non-empty, it will be merged with spamassassin_welcomelist
-## file: /etc/spamassassin/whitelist.cf resp. /etc/spamassassin/welcomelist.cf
 spamassassin_welcomelist: []
 
 # Add addtional update channels, which should be updates by the daily
@@ -105,17 +100,12 @@ spamassassin_spamtraining_users: []
 #      score: "0 1.5 0 0.919"
 spamassassin_custom_scores: []
 
-# On Debian 12/Bookworm, this role will per default install 'spamd' alongside spamassassin
-# On Debian 11/Bullseye, 'spamd' will not be installed per default, except:
-#   1. bullseye-backports are enabled in your apt sources AND spamassassin is already installed with version >=4.0.0-1
-#   2. bullseye-backports are enabled in your apt sources AND 'spamd' package is added to the 'spamassassin_packages' variable
-# Note that this role does not take care of adding bullseye-backports to your apt sources!
 spamassassin_packages:
   - spamassassin
   - spamc
+  - spamd
   - libmail-spf-perl
   - libmail-dkim-perl
-  - procps  # provides /bin/kill, should actually be a dependency
 
 
 # enable DMARC checks

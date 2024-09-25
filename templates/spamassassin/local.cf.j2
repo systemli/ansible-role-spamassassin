@@ -119,7 +119,7 @@ bayes_ignore_header {{ header }}
 #
 ifplugin Mail::SpamAssassin::Plugin::Shortcircuit
 #
-#   default: strongly-{{ welcomelist }}ed mails are *really* {{ welcomelist }}ed now, if the
+#   default: strongly-welcomelisted mails are *really* welcomelisted now, if the
 #   shortcircuiting plugin is active, causing early exit to save CPU load.
 #   Uncomment to turn this on
 #
@@ -127,16 +127,14 @@ ifplugin Mail::SpamAssassin::Plugin::Shortcircuit
 #   If you want to shortcircuit without launching unneeded queries, make
 #   sure such rule priority is below -100. These examples are already:
 #
-# shortcircuit USER_IN_{{ welcomelist|upper }}       on
-# shortcircuit USER_IN_DEF_{{ welcomelist|upper }}   on
+# shortcircuit USER_IN_WELCOMELIST       on
+# shortcircuit USER_IN_DEF_WELCOMELIST   on
 # shortcircuit USER_IN_ALL_SPAM_TO     on
-{% if not spamassassin_v4 %}# shortcircuit SUBJECT_IN_{{ welcomelist|upper }}    on{% endif %}
 
-#   the opposite; {{ blocklist }}ed mails can also save CPU
+#   the opposite; blocklisted mails can also save CPU
 #
-# shortcircuit USER_IN_{{ blocklist|upper }}       on
-# shortcircuit USER_IN_{{ blocklist|upper }}_TO    on
-{% if not spamassassin_v4 %}# shortcircuit SUBJECT_IN_{{ blocklist|upper }}    on{% endif %}
+# shortcircuit USER_IN_BLOCKLIST       on
+# shortcircuit USER_IN_BLOCKLIST_TO    on
 
 #   if you have taken the time to correctly specify your "trusted_networks",
 #   this is another good way to save CPU
@@ -174,4 +172,4 @@ score {{ score.name }} {{ score.score }}
 {% endif %}
 
 # additional config files
-include {{ welcomelist }}.cf
+include welcomelist.cf
