@@ -45,6 +45,52 @@ spamassassin_bayes_file_mode: "0777"
 # What networks or hosts are 'trusted' in your setup.
 spamassassin_trusted_networks: []
 
+# Tells SpamAssassin whether DNS resolving is available or not. A value yes
+# indicates DNS resolving is available, a value no indicates DNS resolving is
+# not available - both of these values apply unconditionally and skip initial
+# DNS tests, which can be slow or unreliable.
+# When the option value is a test (with or without arguments), SpamAssassin
+# will query some domain names on the internet during initialization,
+# attempting to determine if DNS resolving is working or not. A space-separated
+# list of domain names may be specified explicitly, or left to a built-in
+# default of a dozen or so domain names. From an explicit or a default list a
+# subset of three domain names is picked randomly for checking. The test
+# queries for NS records of these domain: if at least one query returns a
+# success then SpamAssassin considers DNS resolving as available, otherwise
+# not.
+# The problem is that the test can introduce some startup delay if a network
+# connection is down, and in some cases it can wrongly guess that DNS is
+# unavailable because a test connection failed, what causes disabling several
+# DNS-dependent tests.
+# Please note, the DNS test queries for NS records, so specify domain names,
+# not host names.
+# Since version 3.4.0 of SpamAssassin a default setting for option
+# dns_available is yes. A default in older versions was test.
+# Quotes are important, don't miss them!
+spamassassin_dns_available: "yes"
+
+# Specifies an IP address of a DNS server, and optionally its port number. The
+# dns_server directive may be specified multiple times, each entry adding to a
+# list of available resolving name servers. The ip-addr-port argument can
+# either be an IPv4 or IPv6 address, optionally enclosed in brackets, and
+# optionally followed by a colon and a port number. In absence of a port number
+# a standard port number 53 is assumed. When an IPv6 address is specified along
+# with a port number, the address must be enclosed in brackets to avoid parsing
+# ambiguity regarding a colon separator. A scoped link-local IP address is
+# allowed (assuming underlying modules allow it).
+# spamassassin_dns_servers:
+#   - 127.0.0.1
+#   - 127.0.0.1:53
+#   - [127.0.0.1]:53
+#   - [::1]:53
+#   - fe80::1%lo0
+#   - [fe80::1%lo0]:53
+# In absence of dns_server directives, the list of name servers is provided by
+# Net::DNS module, which typically obtains the list from /etc/resolv.conf, but
+# this may be platform dependent. Please consult the Net::DNS::Resolver
+# documentation for details.
+spamassassin_dns_servers: []
+  
 # Allowed: nfsafe, flock, win32
 spamassassin_lock_method: flock
 
