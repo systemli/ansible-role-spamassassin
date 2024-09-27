@@ -1,0 +1,2928 @@
+# SpamAssassin email classification (ham/spam) counters
+counter spamassassin_email_count_ham_total
+counter spamassassin_email_count_spam_total
+
+# SpamAssassin test, by rounded score of email, counters
+counter spamassassin_email_test_count_total by test, email_score
+
+/$/ {
+  /spamd: (?:clean message|identified spam) \((?P<score>-?[0-9.]+)\/[0-9.]+\) for/ {
+    $score < 5 {
+      spamassassin_email_count_ham_total++
+    } else {
+      spamassassin_email_count_spam_total++
+    }
+  }
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>ACCESSDB)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>ACT_NOW_CAPS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>AC_BR_BONANZA)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>AC_DIV_BONANZA)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>ALL_TRUSTED)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>ANY_BOUNCE_MESSAGE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>ARC_INVALID)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>ARC_SIGNED)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>ARC_VALID)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>AWL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>AXB_XMAILER_MIMEOLE_OL_024C2)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>BAD_CREDIT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>BAD_ENC_HEADER)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>BANG_GUAR)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>BANG_OPRAH)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>BASE64_LENGTH_79_INF)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>BAYES_00)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>BAYES_05)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>BAYES_20)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>BAYES_40)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>BAYES_50)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>BAYES_60)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>BAYES_80)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>BAYES_95)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>BAYES_99)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>BAYES_999)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>BILLION_DOLLARS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>BITCOIN_SPF_ONLYALL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>BLANK_LINES_80_90)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>BODY_8BITS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>BODY_ENHANCEMENT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>BODY_ENHANCEMENT2)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>BOUNCE_MESSAGE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>BULK_RE_SUSP_NTLD)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>CHALLENGE_RESPONSE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>CHARSET_FARAWAY)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>CHARSET_FARAWAY_HEADER)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>COMPENSATION)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>CONFIRMED_FORGED)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>CORRUPT_FROM_LINE_IN_HDRS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>CRBOUNCE_MESSAGE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>CTE_8BIT_MISMATCH)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>CTYPE_8SPACE_GIF)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>CUM_SHOT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DATE_IN_FUTURE_03_06)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DATE_IN_FUTURE_06_12)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DATE_IN_FUTURE_12_24)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DATE_IN_FUTURE_24_48)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DATE_IN_FUTURE_48_96)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DATE_IN_FUTURE_96_XX)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DATE_IN_FUTURE_Q_PLUS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DATE_IN_PAST_03_06)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DATE_IN_PAST_06_12)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DATE_IN_PAST_12_24)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DATE_IN_PAST_24_48)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DATE_IN_PAST_96_XX)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DATE_SPAMWARE_Y2K)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DCC_CHECK)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DCC_REPUT_00_12)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DCC_REPUT_13_19)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DCC_REPUT_70_89)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DCC_REPUT_90_94)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DCC_REPUT_95_98)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DCC_REPUT_99_100)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DEAR_BENEFICIARY)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DEAR_FRIEND)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DEAR_SOMETHING)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DEAR_WINNER)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DIET_1)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DIGEST_MULTIPLE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DKIMDOMAIN_IN_DWL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DKIMDOMAIN_IN_DWL_UNKNOWN)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DKIM_ADSP_ALL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DKIM_ADSP_CUSTOM_HIGH)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DKIM_ADSP_CUSTOM_LOW)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DKIM_ADSP_CUSTOM_MED)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DKIM_ADSP_DISCARD)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DKIM_ADSP_NXDOMAIN)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DKIM_INVALID)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DKIM_SIGNED)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DKIM_VALID)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DKIM_VALID_AU)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DKIM_VALID_EF)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DMARC_MISSING)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DMARC_NONE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DMARC_PASS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DMARC_QUAR)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DMARC_REJECT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DOS_ANAL_SPAM_MAILER)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DOS_FIX_MY_URI)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DOS_HIGH_BAT_TO_MX)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DOS_LET_GO_JOB)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DOS_OE_TO_MX)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DOS_OE_TO_MX_IMAGE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DOS_OUTLOOK_TO_MX)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DOS_RCVD_IP_TWICE_C)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DOS_URI_ASTERISK)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DRUGS_ANXIETY)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DRUGS_ANXIETY_EREC)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DRUGS_ANXIETY_OBFU)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DRUGS_DIET)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DRUGS_DIET_OBFU)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DRUGS_ERECTILE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DRUGS_ERECTILE_OBFU)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DRUGS_HDIA)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DRUGS_MANYKINDS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DRUGS_MUSCLE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DRUGS_SLEEP_EREC)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DRUGS_SMEAR1)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DRUG_DOSAGE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DRUG_ED_CAPS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DRUG_ED_GENERIC)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DRUG_ED_ONLINE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DRUG_ED_SILD)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DYN_RDNS_AND_INLINE_IMAGE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DYN_RDNS_SHORT_HELO_HTML)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>DYN_RDNS_SHORT_HELO_IMAGE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>EMAIL_ROT13)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>EMPTY_MESSAGE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>EMRCP)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>EM_ROLEX)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>ENGLISH_UCE_SUBJECT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>ENTITY_DEC_OTHER)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>ENV_AND_HDR_SPF_MATCH)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>EXCUSE_24)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>EXCUSE_4)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>EXCUSE_REMOVE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FAKE_HELO_MAIL_COM_DOM)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FAKE_OUTBLAZE_RCVD)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FILL_THIS_FORM)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FILL_THIS_FORM_LONG)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FIN_FREE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FORGED_GMAIL_RCVD)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FORGED_HOTMAIL_RCVD2)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FORGED_IMS_HTML)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FORGED_IMS_TAGS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FORGED_MSGID_AOL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FORGED_MSGID_EXCITE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FORGED_MSGID_HOTMAIL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FORGED_MSGID_MSN)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FORGED_MSGID_YAHOO)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FORGED_MUA_EUDORA)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FORGED_MUA_IMS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FORGED_MUA_MOZILLA)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FORGED_MUA_OIMO)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FORGED_MUA_OUTLOOK)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FORGED_MUA_THEBAT_BOUN)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FORGED_MUA_THEBAT_CS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FORGED_OUTLOOK_HTML)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FORGED_OUTLOOK_TAGS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FORGED_QUALCOMM_TAGS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FORGED_TELESP_RCVD)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FORGED_THEBAT_HTML)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FORGED_YAHOO_RCVD)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FORM_FRAUD)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FORM_FRAUD_3)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FORM_FRAUD_5)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FORWARD_LOOKING)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FRAGMENTED_MESSAGE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FREEMAIL_ENVFROM_END_DIGIT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FREEMAIL_FORGED_FROMDOMAIN)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FREEMAIL_FORGED_REPLYTO)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FREEMAIL_FROM)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FREEMAIL_REPLY)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FREEMAIL_REPLYTO)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FREEMAIL_REPLYTO_END_DIGIT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FREEMAIL_SUBJECT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FREE_PORN)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FREE_QUOTE_INSTANT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FROM_2_EMAILS_SHORT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FROM_BANK_NOAUTH)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FROM_BLANK_NAME)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FROM_DOMAIN_NOVOWEL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FROM_EXCESS_BASE64)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FROM_GOV_DKIM_AU)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FROM_GOV_REPLYTO_FREEMAIL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FROM_GOV_SPOOF)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FROM_ILLEGAL_CHARS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FROM_LOCAL_DIGITS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FROM_LOCAL_HEX)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FROM_LOCAL_NOVOWEL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FROM_NEWDOM_BTC)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FROM_NO_USER)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FROM_NTLD_LINKBAIT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FROM_NTLD_REPLY_FREEMAIL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FROM_NUMBERO_NEWDOMAIN)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FROM_OFFERS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FROM_PAYPAL_SPOOF)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FROM_STARTS_WITH_NUMS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FROM_SUSPICIOUS_NTLD)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FROM_SUSPICIOUS_NTLD_FP)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FROM_WSP_TRAIL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FSL_BULK_SIG)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FSL_CTYPE_WIN1251)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FUZZY_AFFORDABLE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FUZZY_AMBIEN)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FUZZY_BILLION)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FUZZY_CPILL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FUZZY_CREDIT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FUZZY_ERECT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FUZZY_GUARANTEE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FUZZY_MEDICATION)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FUZZY_MERIDIA)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FUZZY_MILLION)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FUZZY_MONEY)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FUZZY_MORTGAGE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FUZZY_OBLIGATION)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FUZZY_OFFERS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FUZZY_PHARMACY)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FUZZY_PHENT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FUZZY_PRESCRIPT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FUZZY_PRICES)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FUZZY_REFINANCE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FUZZY_REMOVE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FUZZY_ROLEX)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FUZZY_SOFTWARE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FUZZY_THOUSANDS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FUZZY_VIOXX)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FUZZY_VLIUM)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FUZZY_VPILL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>FUZZY_XPILL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>GAPPY_SUBJECT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>GB_BITCOIN_CP)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>GB_BITCOIN_NH)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>GB_FREEMAIL_DISPTO)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>GB_FREEMAIL_DISPTO_NOTFREEM)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>GOOGLE_DRIVE_REPLY_BAD_NTLD)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>GTUBE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>GUARANTEED_100_PERCENT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HDR_ORDER_FTSDMCXX_001C)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HDR_ORDER_FTSDMCXX_BAT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HEADER_COUNT_CTYPE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HEADER_COUNT_SUBJECT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HEADER_FROM_DIFFERENT_DOMAINS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HEADER_SPAM)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HEAD_ILLEGAL_CHARS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HEAD_LONG)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HELO_DYNAMIC_CHELLO_NL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HELO_DYNAMIC_DHCP)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HELO_DYNAMIC_DIALIN)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HELO_DYNAMIC_HCC)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HELO_DYNAMIC_HEXIP)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HELO_DYNAMIC_HOME_NL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HELO_DYNAMIC_IPADDR)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HELO_DYNAMIC_IPADDR2)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HELO_DYNAMIC_ROGERS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HELO_DYNAMIC_SPLIT_IP)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HELO_NO_DOMAIN)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HELO_STATIC_HOST)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HIDE_WIN_STATUS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_BADTAG_40_50)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_BADTAG_50_60)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_BADTAG_60_70)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_BADTAG_90_100)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_CHARSET_FARAWAY)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_COMMENT_SAVED_URL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_COMMENT_SHORT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_EMBEDS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_EXTRA_CLOSE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_FONT_FACE_BAD)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_FONT_LOW_CONTRAST)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_FONT_SIZE_HUGE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_FONT_SIZE_LARGE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_FORMACTION_MAILTO)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_IFRAME_SRC)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_IMAGE_ONLY_04)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_IMAGE_ONLY_08)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_IMAGE_ONLY_12)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_IMAGE_ONLY_16)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_IMAGE_ONLY_20)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_IMAGE_ONLY_24)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_IMAGE_ONLY_28)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_IMAGE_ONLY_32)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_IMAGE_RATIO_02)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_IMAGE_RATIO_04)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_IMAGE_RATIO_06)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_IMAGE_RATIO_08)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_MESSAGE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_MIME_NO_HTML_TAG)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_MISSING_CTYPE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_NONELEMENT_30_40)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_NONELEMENT_40_50)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_NONELEMENT_60_70)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_NONELEMENT_80_90)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_OBFUSCATE_05_10)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_OBFUSCATE_10_20)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_OBFUSCATE_20_30)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_OBFUSCATE_30_40)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_OBFUSCATE_50_60)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_OBFUSCATE_70_80)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_OBFUSCATE_90_100)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_SHORT_CENTER)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_SHORT_LINK_IMG_1)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_SHORT_LINK_IMG_2)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_SHORT_LINK_IMG_3)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_TAG_BALANCE_BODY)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_TAG_BALANCE_HEAD)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTML_TAG_EXIST_BGSOUND)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTTPS_IP_MISMATCH)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTTP_77)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTTP_ENTITIES_HOST)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTTP_ESCAPED_HOST)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>HTTP_EXCESSIVE_ESCAPES)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>IMPOTENCE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>INVALID_DATE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>INVALID_DATE_TZ_ABSURD)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>INVALID_MSGID)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>INVALID_TZ_CST)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>INVALID_TZ_EST)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>INVESTMENT_ADVICE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>IP_LINK_PLUS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>JAPANESE_UCE_BODY)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>JAPANESE_UCE_SUBJECT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>JOIN_MILLIONS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>JS_FROMCHARCODE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>KHOP_HELO_FCRDNS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>KHOP_JS_OBFUSCATION)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>KOREAN_UCE_SUBJECT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>LIVE_PORN)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>LOCALPART_IN_SUBJECT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>LONGWORDS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>LOTS_OF_MONEY)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>LOTTO_AGENT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>LOTTO_DEPT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>LOW_PRICE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>LUCRATIVE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MAILING_LIST_MULTI)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MALE_ENHANCE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MARKETING_PARTNERS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MAY_BE_FORGED)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MICROSOFT_EXECUTABLE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MILLION_USD)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MIMEPART_LIMIT_EXCEEDED)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MIME_BAD_ISO_CHARSET)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MIME_BASE64_BLANKS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MIME_BASE64_TEXT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MIME_BOUND_DD_DIGITS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MIME_BOUND_DIGITS_15)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MIME_BOUND_MANY_HEX)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MIME_CHARSET_FARAWAY)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MIME_HEADER_CTYPE_ONLY)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MIME_HTML_MOSTLY)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MIME_HTML_ONLY)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MIME_HTML_ONLY_MULTI)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MIME_QP_LONG_LINE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MIME_SUSPECT_NAME)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MISSING_DATE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MISSING_FROM)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MISSING_HB_SEP)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MISSING_HEADERS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MISSING_MID)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MISSING_MIMEOLE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MISSING_MIME_HB_SEP)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MISSING_SUBJECT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MONEY_ATM_CARD)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MONEY_BACK)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MONEY_FORM)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MONEY_FORM_SHORT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MONEY_FRAUD_3)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MONEY_FRAUD_5)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MONEY_FRAUD_8)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MONEY_FREEMAIL_REPTO)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MONEY_FROM_MISSP)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MORE_SEX)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MPART_ALT_DIFF)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MPART_ALT_DIFF_COUNT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MSGID_FROM_MTA_HEADER)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MSGID_MULTIPLE_AT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MSGID_OUTLOOK_INVALID)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MSGID_RANDY)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MSGID_SHORT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MSGID_SPAM_CAPS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MSGID_SPAM_LETTERS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MSGID_YAHOO_CAPS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>MULTI_FORGED)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>NAME_EMAIL_DIFF)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>NA_DOLLARS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>NICE_REPLY_A)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>NML_ADSP_CUSTOM_HIGH)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>NML_ADSP_CUSTOM_LOW)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>NML_ADSP_CUSTOM_MED)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>NONEXISTENT_CHARSET)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>NORMAL_HTTP_TO_IP)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>NOT_ADVISOR)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>NO_DNS_FOR_FROM)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>NO_HEADERS_MESSAGE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>NO_MEDICAL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>NO_PRESCRIPTION)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>NO_RDNS_DOTCOM_HELO)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>NO_RECEIVED)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>NO_RELAYS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>NULL_IN_BODY)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>NUMBERONLY_BITCOIN_EXP)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>NUMERIC_HTTP_ADDR)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>OBFUSCATING_COMMENT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>OBSCURED_EMAIL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>ONE_TIME)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>ONLINE_PHARMACY)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>OOOBOUNCE_MESSAGE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>PART_CID_STOCK)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>PART_CID_STOCK_LESS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>PDS_BAD_THREAD_QP_64)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>PDS_BTC_ID)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>PDS_BTC_MSGID)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>PDS_BTC_NTLD)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>PDS_DBL_URL_TNB_RUNON)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>PDS_HELO_SPF_FAIL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>PDS_NAKED_TO_NUMERO)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>PDS_NO_FULL_NAME_SPOOFED_URL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>PDS_RDNS_DYNAMIC_FP)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>PDS_SHORT_SPOOFED_URL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>PDS_TINYSUBJ_URISHRT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>PDS_TONAME_EQ_TOLOCAL_FREEM_FORGE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>PERCENT_RANDOM)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>PHISH_AZURE_CLOUDAPP)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>PLING_QUERY)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>PP_MIME_FAKE_ASCII_TEXT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>PP_TOO_MUCH_UNICODE02)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>PP_TOO_MUCH_UNICODE05)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>PREST_NON_ACCREDITED)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>PREVENT_NONDELIVERY)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>PRICES_ARE_AFFORDABLE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>PYZOR_CHECK)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RATWARE_EFROM)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RATWARE_EGROUPS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RATWARE_HASH_DASH)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RATWARE_MOZ_MALFORMED)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RATWARE_MPOP_WEBMAIL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RATWARE_MS_HASH)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RATWARE_NAME_ID)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RATWARE_OE_MALFORMED)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RATWARE_OUTLOOK_NONAME)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RATWARE_RCVD_AT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RATWARE_RCVD_PF)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RATWARE_ZERO_TZ)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_AM_PM)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_BAD_ID)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_DOUBLE_IP_LOOSE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_DOUBLE_IP_SPAM)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_FAKE_HELO_DOTCOM)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_FORGED_WROTE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_HELO_IP_MISMATCH)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_ILLEGAL_IP)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_BL_SPAMCOP_NET)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_DNSWL_BLOCKED)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_DNSWL_HI)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_DNSWL_LOW)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_DNSWL_MED)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_DNSWL_NONE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_IADB_DK)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_IADB_DOPTIN)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_IADB_DOPTIN_GT50)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_IADB_DOPTIN_LT50)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_IADB_EDDB)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_IADB_EPIA)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_IADB_GOODMAIL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_IADB_LISTED)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_IADB_LOOSE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_IADB_MI_CPEAR)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_IADB_MI_CPR_30)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_IADB_MI_CPR_MAT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_IADB_ML_DOPTIN)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_IADB_NOCONTROL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_IADB_OOO)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_IADB_OPTIN)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_IADB_OPTIN_GT50)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_IADB_OPTIN_LT50)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_IADB_OPTOUTONLY)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_IADB_RDNS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_IADB_SENDERID)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_IADB_SPF)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_IADB_UNVERIFIED_1)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_IADB_UNVERIFIED_2)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_IADB_UT_CPEAR)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_IADB_UT_CPR_30)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_IADB_UT_CPR_MAT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_IADB_VOUCHED)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_MAPS_DUL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_MAPS_NML)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_MAPS_OPS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_MAPS_RBL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_MAPS_RSS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_MSPIKE_BL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_MSPIKE_H2)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_MSPIKE_H3)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_MSPIKE_H4)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_MSPIKE_H5)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_MSPIKE_L2)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_MSPIKE_L3)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_MSPIKE_L4)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_MSPIKE_L5)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_MSPIKE_WL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_PBL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_PSBL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_SBL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_SBL_CSS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_SORBS_BLOCK)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_SORBS_DUL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_SORBS_HTTP)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_SORBS_MISC)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_SORBS_SMTP)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_SORBS_SOCKS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_SORBS_SPAM)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_SORBS_WEB)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_SORBS_ZOMBIE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_VALIDITY_CERTIFIED)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_VALIDITY_RPBL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_VALIDITY_SAFE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_XBL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_ZEN_BLOCKED)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_IN_ZEN_BLOCKED_OPENDNS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RCVD_MAIL_COM)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RDNS_DYNAMIC)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RDNS_NONE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>REFINANCE_NOW)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>REFINANCE_YOUR_HOME)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>REMOVE_BEFORE_LINK)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>REPLICA_WATCH)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>REPTO_419_FRAUD)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>REPTO_419_FRAUD_AOL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>REPTO_419_FRAUD_AOL_LOOSE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>REPTO_419_FRAUD_CNS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>REPTO_419_FRAUD_GM)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>REPTO_419_FRAUD_GM_LOOSE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>REPTO_419_FRAUD_HM)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>REPTO_419_FRAUD_OL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>REPTO_419_FRAUD_PM)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>REPTO_419_FRAUD_QQ)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>REPTO_419_FRAUD_YH)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>REPTO_419_FRAUD_YH_LOOSE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>REPTO_419_FRAUD_YJ)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>REPTO_419_FRAUD_YN)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>REPTO_QUOTE_AOL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>REPTO_QUOTE_IMS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>REPTO_QUOTE_MSN)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>REPTO_QUOTE_QUALCOMM)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>REPTO_QUOTE_YAHOO)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RUDE_HTML)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>RUSSIAN_UCE_SUBJECT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SCC_CANSPAM_1)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SCC_CANSPAM_2)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SCC_ISEMM_LID_1)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SCC_ISEMM_LID_1A)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SCC_ISEMM_LID_1B)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SEO_SUSP_NTLD)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SERGIO_SUBJECT_VIAGRA01)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SHORTCIRCUIT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SHORT_HELO_AND_INLINE_IMAGE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SHORT_IMG_SUSP_NTLD)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SHORT_SHORTNER)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SORTED_RECIPS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SPAMMY_XMAILER)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SPF_FAIL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SPF_HELO_FAIL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SPF_HELO_NEUTRAL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SPF_HELO_NONE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SPF_HELO_PASS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SPF_HELO_SOFTFAIL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SPF_NEUTRAL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SPF_NONE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SPF_PASS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SPF_SOFTFAIL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SPOOFED_FREEMAIL_NO_RDNS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SPOOF_COM2COM)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SPOOF_COM2OTH)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SPOOF_GMAIL_MID)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SPOOF_NET2COM)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>STOCK_ALERT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>STOCK_IMG_CTYPE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>STOCK_IMG_HDR_FROM)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>STOCK_IMG_HTML)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>STOCK_IMG_OUTLOOK)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>STRONG_BUY)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SUBJECT_DIET)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SUBJECT_DRUG_GAP_C)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SUBJECT_DRUG_GAP_L)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SUBJECT_DRUG_GAP_S)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SUBJECT_DRUG_GAP_VA)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SUBJECT_DRUG_GAP_X)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SUBJECT_FUZZY_CHEAP)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SUBJECT_FUZZY_MEDS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SUBJECT_FUZZY_PENIS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SUBJECT_FUZZY_TION)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SUBJECT_FUZZY_VPILL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SUBJECT_IN_BLACKLIST)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SUBJECT_IN_BLOCKLIST)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SUBJECT_IN_WELCOMELIST)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SUBJECT_IN_WHITELIST)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SUBJECT_NEEDS_ENCODING)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SUBJECT_SEXUAL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SUBJ_ALL_CAPS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SUBJ_AS_SEEN)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SUBJ_BUY)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SUBJ_DOLLARS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SUBJ_ILLEGAL_CHARS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SUBJ_YOUR_DEBT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SUBJ_YOUR_FAMILY)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>SUSPICIOUS_RECIPS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>THIS_IS_ADV_SUSP_NTLD)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TO_MALFORMED)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TRACKER_ID)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TT_MSGID_TRUNC)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TT_OBSCURED_VALIUM)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TT_OBSCURED_VIAGRA)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_ACT_193)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_APPROVED)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_DEAR_HOMEOWNER)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_ENVFROM_APOST)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_FLOAT_GENERAL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_FUZZY_DEGREE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_FUZZY_FINANCE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_FUZZY_FIXED_RATE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_FUZZY_MICROCAP)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_FUZZY_PHARMACEUTICAL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_FUZZY_SYMBOL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_INCREASE_SIZE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_LINK_SAVE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_PH_BODY_ACCOUNTS_PRE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_PH_REC)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_PH_SEC)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_QUAL_MEDS)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_RATWARE_CB)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_RATWARE_CB_2)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_RATWARE_MSGID_02)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_RCVD_IP)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_RCVD_IP4)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_SECTION)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_SILLY_URI_OBFU)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_SPACED_SUBJECT_WORD3)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_STOCK1)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_SUBJ_ACC_NUM)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_SUBJ_FINGER_03)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_SUBJ_OWE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_SUBJ_WIPE_DEBT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_VISIT_PHARMA)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>TVD_VIS_HIDDEN)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_DATE_IN_FUTURE_96_Q)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_DOS_OUTLOOK_TO_MX_IMAGE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_DRUGS_ERECTILE_SHORT_SHORTNER)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_FILL_THIS_FORM_FRAUD_PHISH)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_FILL_THIS_FORM_LOAN)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_FILL_THIS_FORM_SHORT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_FROMNAME_EQUALS_TO)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_FROMNAME_SPOOFED_EMAIL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_GB_FREEM_FROM_NOT_REPLY)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_LOTTO_AGENT_FM)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_LOTTO_AGENT_RPLY)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_LOTTO_URI)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_MONEY_PERCENT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_OFFER_ONLY_AMERICA)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_PDS_BTC_AHACKER)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_PDS_BTC_HACKER)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_PDS_EMPTYSUBJ_URISHRT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_PDS_FREEMAIL_REPLYTO_URISHRT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_PDS_FROM_2_EMAILS_SHRTNER)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_PDS_LTC_AHACKER)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_PDS_LTC_HACKER)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_PDS_OTHER_BAD_TLD)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_PDS_PRO_TLD)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_PDS_SHORTFWD_URISHRT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_PDS_SHORTFWD_URISHRT_FP)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_PDS_SHORTFWD_URISHRT_QP)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_PDS_URISHRT_LOCALPART_SUBJ)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_REMOTE_IMAGE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_SENT_TO_EMAIL_ADDR)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_SHARE_50_50)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_SPF_HELO_PERMERROR)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_SPF_HELO_TEMPERROR)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_SPF_PERMERROR)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_SPF_TEMPERROR)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_SUSPNTLD_EXPIRATION_EXTORT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_TONOM_EQ_TOLOC_SHRT_PSHRTNER)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>T_TONOM_EQ_TOLOC_SHRT_SHRTNER)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>UNCLAIMED_MONEY)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>UNCLOSED_BRACKET)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>UNPARSEABLE_RELAY)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>UNRESOLVED_TEMPLATE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>UNWANTED_LANGUAGE_BODY)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>UPPERCASE_50_75)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>UPPERCASE_75_100)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>URG_BIZ)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>URIBL_RHS_DOB)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>URI_GOOG_STO_SPAMMY)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>URI_HEX)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>URI_HOST_IN_BLACKLIST)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>URI_HOST_IN_BLOCKLIST)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>URI_HOST_IN_WELCOMELIST)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>URI_HOST_IN_WHITELIST)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>URI_NOVOWEL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>URI_NO_WWW_BIZ_CGI)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>URI_NO_WWW_INFO_CGI)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>URI_TRUNCATED)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>URI_UNSUBSCRIBE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>URL_SHORTENER_CHAINED)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>URL_SHORTENER_DISABLED)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>USER_IN_ALL_SPAM_TO)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>USER_IN_BLACKLIST)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>USER_IN_BLACKLIST_TO)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>USER_IN_BLOCKLIST)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>USER_IN_BLOCKLIST_TO)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>USER_IN_DEF_DKIM_WL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>USER_IN_DEF_SPF_WL)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>USER_IN_DEF_WELCOMELIST)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>USER_IN_DEF_WHITELIST)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>USER_IN_DKIM_WELCOMELIST)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>USER_IN_DKIM_WHITELIST)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>USER_IN_MORE_SPAM_TO)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>USER_IN_SPF_WELCOMELIST)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>USER_IN_SPF_WHITELIST)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>USER_IN_WELCOMELIST)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>USER_IN_WELCOMELIST_TO)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>USER_IN_WHITELIST)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>USER_IN_WHITELIST_TO)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>US_DOLLARS_3)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>VBOUNCE_MESSAGE)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>VIA_GAP_GRA)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>VPS_NO_NTLD)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>WEIRD_PORT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>WEIRD_QUOTING)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>WITH_LC_SMTP)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>XFER_LOTSA_MONEY)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>XPRIO_URL_SHORTNER)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>X_IP)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>X_MESSAGE_INFO)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>X_PRIORITY_CC)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>YAHOO_DRS_REDIR)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>YAHOO_RD_REDIR)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+  /spamd: result: (?:.|Y)[\s]+(?P<email_score>-?[0-9]+)[\s-A-Z_,]+(?P<test>YOU_INHERIT)/ {
+    spamassassin_email_test_count_total[$test][$email_score]++
+  }
+
+}

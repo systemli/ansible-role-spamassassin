@@ -106,3 +106,7 @@
 - name: Import razor tasks
   import_tasks: razor.yml
   when: spamassassin_razor_enabled
+
+- name: Import mtail tasks
+  import_tasks: mtail.yml
+  when: spamassassin_mtail_enabled
