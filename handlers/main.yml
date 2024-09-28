@@ -18,8 +18,3 @@
   service:
     name: spamd
     state: reloaded
-
-- name: Restart monit
-  service:
-    name: monit
-    state: restarted
