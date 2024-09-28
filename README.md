@@ -76,9 +76,6 @@ Defaults:
 
     spamassassin_razor_config_dir: /etc/spamassassin/.razor
 
-    # Enable monit monitoring
-    spamassassin_monit_enabled: False
-
     # Enable spam training by users and domain
     # spamassassin_spamtraining_users:
     #    - domain: myfirstdomain.org
