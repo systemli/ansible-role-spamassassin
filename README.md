@@ -88,6 +88,14 @@ Defaults:
     #       - foobar
     spamassassin_spamtraining_users: []
 
+    # Set custom spamassasssin rules
+    # spamassassin_custom_rules:
+    #   - |
+    #     header   SPF_FAIL	eval:check_for_spf_fail()
+    #     describe SPF_FAIL	SPF: sender does not match SPF record (fail)
+    #     tflags   SPF_FAIL	net
+    #     reuse    SPF_FAIL
+
     # Set custom spamassassin scores
     # spamassassin_custom_scores:
     #    - name: SPF_FAIL

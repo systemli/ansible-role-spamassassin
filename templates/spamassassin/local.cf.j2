@@ -182,6 +182,13 @@ use_razor2 0
 {% endif %}
 razor_config {{ spamassassin_razor_config_dir }}
 
+{% if spamassassin_custom_rules %}
+# custom rules
+{% for rule in spamassassin_custom_rules %}
+{{ rule }}
+{% endfor %}
+{% endif -%}
+
 {% if spamassassin_custom_scores %}
 # custom scores
 {% for score in spamassassin_custom_scores %}
