@@ -105,6 +105,8 @@ Defaults:
     spamassassin_packages:
       - spamassassin
       - spamc
+      - spamd
+      - libmail-dmarc-perl
       - libmail-spf-perl
       - libmail-dkim-perl
 
