@@ -33,6 +33,9 @@ report_safe {{ spamassassin_report_safe }}
 
 clear_headers
 
+#X-Spam-ASN: AS24940 213.239.192.0/18
+add_header all ASN _ASN_
+
 #X-Spam-Checker-Version: SpamAssassin 1.188-2003-05-24-exp on machine.example.org
 add_header all Checker-Version SpamAssassin _VERSION_ on _HOSTNAME_
 
@@ -76,6 +79,13 @@ lock_method {{ spamassassin_lock_method }}
 # required_score 5.0
 required_score {{ spamassassin_required_score }}
 
+# ASN - Look up the Autonomous System Number of the connecting IP
+# and create a header containing ASN data for bayes tokenization.
+# https://spamassassin.apache.org/full/4.0.x/doc/Mail_SpamAssassin_Plugin_ASN.html
+loadplugin Mail::SpamAssassin::Plugin::ASN
+asn_prefer_geodb 1
+asn_use_geodb 1
+asn_use_dns 0
 
 #   Use Bayesian classifier (default: 1)
 #
