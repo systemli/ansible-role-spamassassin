@@ -76,6 +76,9 @@ Defaults:
 
     spamassassin_razor_config_dir: /etc/spamassassin/.razor
 
+    # Enable mtail
+    spamassassin_mtail_enabled: False
+
     # Enable spam training by users and domain
     # spamassassin_spamtraining_users:
     #    - domain: myfirstdomain.org

@@ -1,0 +1,8 @@
+---
+- name: Install config
+  ansible.builtin.copy:
+    dest: /etc/mtail/spamassassin.mtail
+    group: root
+    mode: "0444"
+    owner: root
+    src: mtail/spamassassin.mtail
