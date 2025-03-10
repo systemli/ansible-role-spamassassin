@@ -1,5 +1,10 @@
 ---
+- name: Lint configs to catch errors
+  ansible.builtin.command: /usr/bin/spamassassin --lint
+  listen: "Restart spamd"
+
 - name: Restart spamd
-  service:
+  ansible.builtin.service:
     name: spamd
     state: restarted
+  listen: "Restart spamd"
