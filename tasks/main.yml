@@ -56,7 +56,7 @@
         owner: root
         group: root
         mode: 0644
-      notify: Reload spamd
+      notify: Restart spamd
 
     - name: Ensure spamassassin logrotate is latest
       template:
