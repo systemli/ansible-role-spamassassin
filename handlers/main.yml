@@ -1,20 +1,5 @@
 ---
-- name: Restart spamassassin
-  service:
-    name: spamassassin
-    state: restarted
-
 - name: Restart spamd
   service:
     name: spamd
     state: restarted
-
-- name: Reload spamassassin
-  service:
-    name: spamassassin
-    state: reloaded
-
-- name: Reload spamd
-  service:
-    name: spamd
-    state: reloaded
