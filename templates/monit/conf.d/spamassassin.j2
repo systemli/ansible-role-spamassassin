@@ -1,4 +1,0 @@
-check process spamassassin with pidfile {{ spamassassin_pidfile }}
-    start program = "/usr/sbin/service spamd start" with timeout 60 seconds
-    stop program  = "/usr/sbin/service spamd stop"
-    group server
