@@ -100,17 +100,165 @@ bayes_file_mode {{ spamassassin_bayes_file_mode }}
 # bayes_auto_learn 1
 bayes_auto_learn {{ spamassassin_bayes_auto_learn }}
 
-
-#   Set headers which may provide inappropriate cues to the Bayesian
-#   classifier
+#   The score threshold below which a mail has to score, to be fed into
+#   SpamAssassin's learning systems automatically as a non-spam message.
 #
-# bayes_ignore_header X-Bogosity
-# bayes_ignore_header X-Spam-Flag
-# bayes_ignore_header X-Spam-Status
+# bayes_auto_learn_threshold_nonspam 0.1
+bayes_auto_learn_threshold_nonspam {{ spamassassin_bayes_auto_learn_threshold_nonspam }}
 
+#   The score threshold above which a mail has to score, to be fed into
+#   SpamAssassin's learning systems automatically as a spam message.
+#
+#   Note: SpamAssassin requires at least 3 points from the header, and 3 points
+#   from the body to auto-learn as spam. Therefore, the minimum working value for
+#   this option is 6.
+#
+# bayes_auto_learn_threshold_spam 12.0
+bayes_auto_learn_threshold_spam {{ spamassassin_bayes_auto_learn_threshold_spam }}
+
+#   Controls which sources in a mail message can contribute tokens (e.g. words,
+#   phrases, etc.) to a Bayes classifier. The argument is a space-separated list
+#   of keywords: header, visible, invisible, uri, mimepart), each of which may be
+#   prefixed by a no to indicate its exclusion. Additionally two reserved
+#   keywords are allowed: all and none (or: noall). The list of keywords is
+#   processed sequentially: a keyword all adds all available keywords to a set
+#   being built, a none or noall clears the set, other non-negated keywords are
+#   added to the set, and negated keywords are removed from the set. Keywords are
+#   case-insensitive.
+#
+#   The default set is: header visible invisible uri, which is equivalent for
+#   example to: All NoMIMEpart. The reason why mimepart is not currently in a
+#   default set is that it is a newer source (introduced with SpamAssassin
+#   version 3.4.1) and not much experience has yet been gathered regarding its
+#   usefulness.
+#
+#   See also option bayes_ignore_header for a fine-grained control on individual
+#   header fields under the umbrella of a more general keyword header here.
+#
+#   Keywords imply the following data sources:
+#
+#   header - tokens collected from a message header section
+#   visible - words from visible text (plain or HTML) in a message body
+#   invisible - hidden/invisible text in HTML parts of a message body
+#   uri - URIs collected from a message body
+#   mimepart - digests (hashes) of all MIME parts (textual or non-textual) of
+#              a message, computed after Base64 and quoted-printable decoding,
+#              suffixed by their Content-Type
+#   all - adds all the above keywords to the set being assembled
+#   none or noall - removes all keywords from the set
+#
+#   The bayes_token_sources directive may appear multiple times, its keywords are
+#   interpreted sequentially, adding or removing items from the final set as they
+#   appear in their order in bayes_token_sources directive(s).
+#
+# bayes_token_sources header visible invisible uri
+bayes_token_sources {{ spamassassin_bayes_token_sources | join(' ') }}
+
+#   If you receive mail filtered by upstream mail systems, like a spam-filtering
+#   ISP or mailing list, and that service adds new headers (as most of them do),
+#   these headers may provide inappropriate cues to the Bayesian classifier,
+#   allowing it to take a "short cut". To avoid this, list the headers using this
+#   setting. Header matching is case-insensitive. Example:
+#
+#   bayes_ignore_header X-Bogosity
+#   bayes_ignore_header X-Spam-Flag
+#   bayes_ignore_header X-Spam-Status
 {% for header in spamassassin_bayes_ignore_header %}
 bayes_ignore_header {{ header }}
 {% endfor %}
+
+#   Bayesian classification and autolearning will not be performed on mail from
+#   the listed addresses. Program sa-learn will also ignore the listed addresses
+#   if it is invoked using the --use-ignores option. One or more addresses can be
+#   listed, see welcomelist_from.
+#
+#   Spam messages from certain senders may contain many words that frequently
+#   occur in ham. For example, one might read messages from a preferred
+#   bookstore but also get unwanted spam messages from other bookstores. If
+#   the unwanted messages are learned as spam then any messages discussing
+#   books, including the preferred bookstore and antiquarian messages would be
+#   in danger of being marked as spam. The addresses of the annoying
+#   bookstores would be listed. (Assuming they were halfway legitimate and
+#   didn't send you mail through myriad affiliates.)
+#
+#   Those who have pieces of spam in legitimate messages or otherwise receive ham
+#   messages containing potentially spammy words might fear that some spam
+#   messages might be in danger of being marked as ham. The addresses of the spam
+#   mailing lists, correspondents, etc. would be listed.
+#
+# bayes_ignore_from user@example.com
+{% if spamassassin_bayes_ignore_from %}
+bayes_ignore_from {{ spamassassin_bayes_ignore_from | join(' ') }}
+{% endif %}
+
+#   Bayesian classification and autolearning will not be performed on mail to the
+#   listed addresses. See bayes_ignore_from for details.
+#
+# bayes_ignore_to user@example.com
+{% if spamassassin_bayes_ignore_to %}
+bayes_ignore_to {{ spamassassin_bayes_ignore_to | join(' ') }}
+{% endif %}
+
+#   The Bayes system will, by default, learn any reported messages
+#   (spamassassin -r) as spam. If you do not want this to happen, set this option
+#   to 0.
+#
+# bayes_learn_during_report 1
+bayes_learn_during_report {{ spamassassin_bayes_learn_during_report }}
+
+#   What should be the maximum size of the Bayes tokens database? When expiry
+#   occurs, the Bayes system will keep either 75% of the maximum value, or
+#   100,000 tokens, whichever has a larger value. 150,000 tokens is roughly
+#   equivalent to a 8Mb database file.
+#
+# bayes_expiry_max_db_size 150000
+bayes_expiry_max_db_size {{ spamassassin_bayes_expiry_max_db_size }}
+
+#   If enabled, the Bayes system will try to automatically expire old tokens from
+#   the database. Auto-expiry occurs when the number of tokens in the database
+#   surpasses the bayes_expiry_max_db_size value. If a bayes datastore backend
+#   does not implement individual key/value expirations, the setting is silently
+#   ignored.
+#
+# bayes_auto_expire 1
+bayes_auto_expire {{ spamassassin_bayes_auto_expire }}
+
+#   Time-to-live / expiration time in seconds for tokens kept in a Bayes
+#   database. A numeric value is optionally suffixed by a time unit
+#   (s, m, h, d, w, indicating seconds (default), minutes, hours, days, weeks).
+#
+#   If bayes_auto_expire is true and a Bayes datastore backend supports it
+#   (currently only Redis), this setting controls deletion of expired tokens from
+#   a bayes database. The value is observed on a best-effort basis, exact timing
+#   promises are not necessarily kept. If a bayes datastore backend does not
+#   implement individual key/value expirations, the setting is silently ignored.
+#
+# bayes_token_ttl 3w
+bayes_token_ttl {{ spamassassin_bayes_token_ttl }}
+
+#   Time-to-live / expiration time in seconds for 'seen' entries (i.e. mail
+#   message digests with their status) kept in a Bayes database. A numeric value
+#   is optionally suffixed by a time unit (s, m, h, d, w, indicating seconds
+#   (default), minutes, hours, days, weeks).
+#
+#   If bayes_auto_expire is true and a Bayes datastore backend supports it
+#   (currently only Redis), this setting controls deletion of expired 'seen'
+#   entries from a bayes database. The value is observed on a best-effort basis,
+#   exact timing promises are not necessarily kept. If a bayes datastore backend
+#   does not implement individual key/value expirations, the setting is silently
+#   ignored.
+#
+# bayes_seen_ttl 8d
+bayes_seen_ttl {{ spamassassin_bayes_seen_ttl }}
+
+#   If this option is set, whenever SpamAssassin does Bayes learning, it will put
+#   the information into the journal instead of directly into the database. This
+#   lowers contention for locking the database to execute an update, but will
+#   also cause more access to the journal and cause a delay before the updates
+#   are actually committed to the Bayes database.
+#
+# bayes_learn_to_journal 0
+bayes_learn_to_journal {{ spamassassin_bayes_learn_to_journal }}
 
 #   Whether to decode non- UTF-8 and non-ASCII textual parts and recode
 #   them to UTF-8 before the text is given over to rules processing.
