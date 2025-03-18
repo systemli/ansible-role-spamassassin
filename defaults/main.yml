@@ -39,8 +39,12 @@ spamassassin_bayes_auto_learn: 1
 # Where to store bayes db
 spamassassin_bayes_path: "{{ spamassassin_home_dir }}/bayes_db"
 
-# Permissions of bayes_db files
-spamassassin_bayes_file_mode: "0777"
+# The file mode bits used for the Bayesian filtering database files.
+#
+# Make sure you specify this using the 'x' mode bits set, as it may also be
+# used to create directories. However, if a file is created, the resulting file
+# will not have any execute bits set (the umask is set to 111).
+spamassassin_bayes_file_mode: "0700"
 
 # What networks or hosts are 'trusted' in your setup.
 spamassassin_trusted_networks: []
