@@ -281,9 +281,22 @@ spamassassin_custom_rules: []
 spamassassin_custom_scores: []
 
 spamassassin_packages:
+  - libarchive-zip-perl
+  - libbsd-resource-perl
+  - libcompress-zlib-perl
+  - libdbi-perl
+  - libencode-detect-perl
+  - libgeoip2-perl
+  - libio-socket-ssl-perl
+  - libmail-dkim-perl
+  - libmail-dmarc-perl
+  - libmail-spf-perl
+  - libmaxmind-db-reader-perl
+  - libnet-libidn2-perl
+  - libnet-libidn-perl
+  - libnet-patricia-perl
+  - libpackage-stash-perl
+  - libpackage-stash-xs-perl
   - spamassassin
   - spamc
   - spamd
-  - libmail-dmarc-perl
-  - libmail-spf-perl
-  - libmail-dkim-perl
