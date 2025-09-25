@@ -45,6 +45,9 @@ add_header spam Flag _YESNOCAPS_
 #X-Spam-Status: Yes, score=14.0 required=5.0 autolearn=spam
 add_header all Status "_YESNO_, score=_SCORE_ required=_REQD_ autolearn=_AUTOLEARN_"
 
+#X-Spam-Relay-Countries: US CW
+add_header all Relay-Countries _RELAYCOUNTRY_
+
 # X-Spam-Report: Terse report of tests hit
 add_header all Report _REPORT_
 
