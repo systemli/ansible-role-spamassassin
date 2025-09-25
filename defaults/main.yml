@@ -345,6 +345,7 @@ spamassassin_packages:
   - libmail-dmarc-perl
   - libmail-spf-perl
   - libmaxmind-db-reader-perl
+  - libmaxmind-db-reader-xs-perl
   - libnet-libidn2-perl
   - libnet-libidn-perl
   - libnet-patricia-perl
