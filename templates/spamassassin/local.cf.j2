@@ -45,6 +45,9 @@ add_header spam Flag _YESNOCAPS_
 #X-Spam-Status: Yes, score=14.0 required=5.0 autolearn=spam
 add_header all Status "_YESNO_, score=_SCORE_ required=_REQD_ autolearn=_AUTOLEARN_"
 
+#X-Spam-Relay-Countries: US CW
+add_header all Relay-Countries _RELAYCOUNTRY_
+
 # X-Spam-Report: Terse report of tests hit
 add_header all Report _REPORT_
 
@@ -86,6 +89,32 @@ loadplugin Mail::SpamAssassin::Plugin::ASN
 asn_prefer_geodb 1
 asn_use_geodb 1
 asn_use_dns 0
+
+# DecodeShortURLs - Check for shortened URLs
+# https://spamassassin.apache.org/full/4.0.x/doc/Mail_SpamAssassin_Plugin_DecodeShortURLs.html
+loadplugin Mail::SpamAssassin::Plugin::DecodeShortURLs
+
+# FromNameSpoof - perform various tests to detect spoof attempts using the From
+# header name section
+# https://spamassassin.apache.org/full/4.0.x/doc/Mail_SpamAssassin_Plugin_FromNameSpoof.html
+loadplugin Mail::SpamAssassin::Plugin::FromNameSpoof
+
+# OLEVBMacro - scan Office documents for evidence of OLE Macros or other
+# exploits
+# https://spamassassin.apache.org/full/4.0.x/doc/Mail_SpamAssassin_Plugin_OLEVBMacro.html
+loadplugin Mail::SpamAssassin::Plugin::OLEVBMacro
+
+# PDFInfo - helps detect spam using attached PDF files
+# https://spamassassin.apache.org/full/4.0.x/doc/Mail_SpamAssassin_Plugin_PDFInfo.html
+loadplugin Mail::SpamAssassin::Plugin::PDFInfo
+
+# Phishing - check uris against phishing feed
+# https://spamassassin.apache.org/full/4.0.x/doc/Mail_SpamAssassin_Plugin_Phishing.html
+loadplugin Mail::SpamAssassin::Plugin::Phishing
+
+# RelayCountry - add message metadata indicating the country code of each relay
+# https://spamassassin.apache.org/full/4.0.x/doc/Mail_SpamAssassin_Plugin_RelayCountry.html
+loadplugin Mail::SpamAssassin::Plugin::RelayCountry
 
 #   Use Bayesian classifier (default: 1)
 #

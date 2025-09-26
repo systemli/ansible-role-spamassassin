@@ -340,10 +340,12 @@ spamassassin_packages:
   - libencode-detect-perl
   - libgeoip2-perl
   - libio-socket-ssl-perl
+  - libio-string-perl
   - libmail-dkim-perl
   - libmail-dmarc-perl
   - libmail-spf-perl
   - libmaxmind-db-reader-perl
+  - libmaxmind-db-reader-xs-perl
   - libnet-libidn2-perl
   - libnet-libidn-perl
   - libnet-patricia-perl
