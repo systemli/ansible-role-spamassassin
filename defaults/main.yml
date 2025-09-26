@@ -340,6 +340,7 @@ spamassassin_packages:
   - libencode-detect-perl
   - libgeoip2-perl
   - libio-socket-ssl-perl
+  - libio-string-perl
   - libmail-dkim-perl
   - libmail-dmarc-perl
   - libmail-spf-perl
