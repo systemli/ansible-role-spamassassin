@@ -87,6 +87,10 @@ asn_prefer_geodb 1
 asn_use_geodb 1
 asn_use_dns 0
 
+# DecodeShortURLs - Check for shortened URLs
+# https://spamassassin.apache.org/full/4.0.x/doc/Mail_SpamAssassin_Plugin_DecodeShortURLs.html
+loadplugin Mail::SpamAssassin::Plugin::DecodeShortURLs
+
 #   Use Bayesian classifier (default: 1)
 #
 # use_bayes 1
