@@ -91,6 +91,11 @@ asn_use_dns 0
 # https://spamassassin.apache.org/full/4.0.x/doc/Mail_SpamAssassin_Plugin_DecodeShortURLs.html
 loadplugin Mail::SpamAssassin::Plugin::DecodeShortURLs
 
+# FromNameSpoof - perform various tests to detect spoof attempts using the From
+# header name section
+# https://spamassassin.apache.org/full/4.0.x/doc/Mail_SpamAssassin_Plugin_FromNameSpoof.html
+loadplugin Mail::SpamAssassin::Plugin::FromNameSpoof
+
 #   Use Bayesian classifier (default: 1)
 #
 # use_bayes 1
