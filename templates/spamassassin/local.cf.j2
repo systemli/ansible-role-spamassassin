@@ -404,7 +404,7 @@ dns_query_restriction {{ dns_query_restriction }}
 #
 # rbl_timeout t [t_min] [zone] (default: 15 3)
 
-rbl_timeout 25 5
+rbl_timeout {{ spamassassin_rbl_timeout }}
 
 #   Some shortcircuiting, if the plugin is enabled
 #
