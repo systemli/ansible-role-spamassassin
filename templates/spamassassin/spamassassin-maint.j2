@@ -21,8 +21,7 @@
 test -f /etc/default/spamassassin && . /etc/default/spamassassin
 
 show_usage() {
-    local cmd
-    cmd=$(basename $0)
+    cmd=$(basename "$0")
     cat <<EOF
 
 $cmd performs periodic spamassassin maintainance, including executing sa-update
@@ -45,10 +44,11 @@ die_with_lint() {
 }
 
 do_compile() {
-    if [ -x /usr/bin/re2c -a -x /usr/bin/sa-compile ]; then
+    if command -v re2c > /dev/null 2>&1 &&
+            [ -x /usr/bin/sa-compile ]; then
         env -i LANG="$LANG" PATH="$PATH" start-stop-daemon \
             --chuid debian-spamd:debian-spamd --start \
-            --exec /usr/bin/sa-compile -- --quiet
+            --exec /usr/bin/sa-compile -- --quiet > /dev/null
 
         # Fixup perms -- group and other should be able to
         # read and execute, but never write.  Works around
@@ -60,15 +60,18 @@ do_compile() {
 
 # Tell a running spamd to reload its configs and rules.
 reload() {
-    # Reload
-    if which invoke-rc.d >/dev/null 2>&1; then
-        invoke-rc.d --quiet spamd status > /dev/null && \
-          invoke-rc.d spamd reload > /dev/null
-    else
-        /etc/init.d/spamd reload > /dev/null
+    # Reload spamd if it's running
+    if command -v spamd > /dev/null 2>&1 &&
+            [ -f /run/spamd.pid ]; then
+        if which invoke-rc.d >/dev/null 2>&1; then
+            invoke-rc.d --quiet spamd status > /dev/null && \
+                invoke-rc.d spamd reload > /dev/null
+        else
+            /etc/init.d/spamd reload > /dev/null
+        fi
     fi
     if [ -d /etc/spamassassin/sa-update-hooks.d ]; then
-        run-parts --lsbsysinit /etc/spamassassin/sa-update-hooks.d
+        run-parts --lsbsysinit /etc/spamassassin/sa-update-hooks.d > /dev/null
     fi
 }
 
@@ -116,6 +119,7 @@ retcode_chan=$?
 
 case $retcode in
 {% else %}
+
 case $? in
 {% endif %}
     0)
@@ -136,8 +140,11 @@ case $? in
         ;;
     *)
         echo "sa-update failed for unknown reasons" 1>&2
+        exit 1
         ;;
 esac
+
+exit 0
 
 # Local variables:
 # mode: shell-script

@@ -214,9 +214,9 @@ bayes_token_sources {{ spamassassin_bayes_token_sources | join(' ') }}
 #   allowing it to take a "short cut". To avoid this, list the headers using this
 #   setting. Header matching is case-insensitive. Example:
 #
-#   bayes_ignore_header X-Bogosity
-#   bayes_ignore_header X-Spam-Flag
-#   bayes_ignore_header X-Spam-Status
+# bayes_ignore_header X-Bogosity
+# bayes_ignore_header X-Spam-Flag
+# bayes_ignore_header X-Spam-Status
 {% for header in spamassassin_bayes_ignore_header %}
 bayes_ignore_header {{ header }}
 {% endfor %}
@@ -410,8 +410,9 @@ rbl_timeout {{ spamassassin_rbl_timeout }}
 #
 ifplugin Mail::SpamAssassin::Plugin::Shortcircuit
 #
-#   default: strongly-welcomelisted mails are *really* welcomelisted now, if the
-#   shortcircuiting plugin is active, causing early exit to save CPU load.
+#   default: strongly-welcomelisted mails are *really* welcomelisted now, if
+#   the shortcircuiting plugin is active, causing early exit to save CPU
+#   load.
 #   Uncomment to turn this on
 #
 #   SpamAssassin tries hard not to launch DNS queries before priority -100.
