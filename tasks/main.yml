@@ -19,6 +19,21 @@
         - "{{ spamassassin_home_dir }}"
         - "{{ spamassassin_bayes_path }}"
 
+    - name: Ensure spamassassin bayes files mode and owner
+      file:
+        access_time: preserve
+        group: "{{ spamassassin_user }}"
+        mode: "0660"
+        modification_time: preserve
+        owner: "{{ spamassassin_user}}"
+        path: "{{ spamassassin_bayes_path }}/{{ item }}"
+        state: touch
+      with_items:
+        - bayes_journal
+        - bayes.mutex
+        - bayes_seen
+        - bayes_toks
+
     - name: Ensure spamassassin default rules file is latest
       template:
         src: spamassassin/local.cf.j2
