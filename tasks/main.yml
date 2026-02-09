@@ -60,16 +60,6 @@
         group: root
         mode: 0644
 
-- name: Ensure spamassassin ruleupdate maintenance script is latest
-  template:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-    owner: root
-    group: root
-    mode: 0755
-  loop:
-    - { src: 'spamassassin/spamassassin-maint.j2', dest: '/usr/sbin/spamassassin-maint'}
-
 - name: Ensure cronjob for spamtraining is present
   cron:
     name: "Spamassassin enable spamtraining for {{ item[1] }}@{{ item[0].domain }}"
