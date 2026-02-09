@@ -1,6 +1,6 @@
 ---
 name: Ansible Galaxy
-on:
+true:
   push:
     branches:
       - main

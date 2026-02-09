@@ -1,20 +1,7 @@
 ---
 ## general
 spamassassin_user: debian-spamd
-spamassassin_group: debian-spamd
 spamassassin_home_dir: /var/lib/spamassassin
-spamassassin_log_dir: /var/log/spamassassin
-spamassassin_syslog_facility: "{{ spamassassin_log_dir }}/spamd.log"
-
-# Write spamassassin config files (only install spamassassin and configure
-# cronjob if set to False)
-spamassassin_configure: True
-
-## file: /etc/default/spamassassin
-
-spamassassin_automatic_rule_update_enabled: true
-spamassassin_nice_level: 0
-spamassassin_pidfile: /var/run/spamd.pid
 
 ## file: /etc/spamassassin/local.cf
 
@@ -250,13 +237,6 @@ spamassassin_bayes_learn_to_journal: 0
 # manual welcomelisting
 spamassassin_welcomelist: []
 
-# Add addtional update channels, which should be updates by the daily
-# sa-update cronjob. E.g.:
-# spamassassin_additional_update_channels:
-#   - address: spamassassin.heinlein-support.de
-#     gpg: no
-spamassassin_additional_update_channels: []
-
 # Option allows disabling of rules which would result in a DNS query to one of
 # the listed domains. The first argument must be a literal allow or deny,
 # remaining arguments are domains names.
@@ -327,26 +307,14 @@ spamassassin_dns_query_restrictions: []
 spamassassin_rbl_timeout: 15 3
 
 # Enable additional pyzor check
-spamassassin_pyzor_enabled: True
+spamassassin_pyzor_enabled: true
 
 spamassassin_pyzor_config_dir: /etc/spamassassin/.pyzor
 
 # Enable additional razor chek
-spamassassin_razor_enabled: True
+spamassassin_razor_enabled: true
 
 spamassassin_razor_config_dir: /etc/spamassassin/.razor
-
-# Enable spam training by users and domain
-# spamassassin_spamtraining_users:
-#    - domain: myfirstdomain.org
-#      users:
-#       - admin
-#       - foo
-#    - domain: myseconddomain.org
-#      users:
-#       - admina
-#       - foobar
-spamassassin_spamtraining_users: []
 
 # Set custom spamassasssin rules
 # spamassassin_custom_rules:

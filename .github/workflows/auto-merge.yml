@@ -1,8 +1,8 @@
+---
 name: Auto Merge
 
 on:
   pull_request_target:
-
 jobs:
   auto-merge:
     name: Merge Automatically
