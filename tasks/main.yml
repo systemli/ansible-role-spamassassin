@@ -5,52 +5,49 @@
     state: present
     cache_valid_time: 600
 
-- name: Basic configuration
-  when: spamassassin_configure
-  block:
-    - name: Ensure spamassassin's directories are present
-      file:
-        path: "{{ item }}"
-        owner: "{{ spamassassin_user }}"
-        group: "{{ spamassassin_user }}"
-        mode: 0755
-        state: directory
-      with_items:
-        - "{{ spamassassin_home_dir }}"
-        - "{{ spamassassin_bayes_path }}"
+- name: Ensure spamassassin's directories are present
+  file:
+    path: "{{ item }}"
+    owner: "{{ spamassassin_user }}"
+    group: "{{ spamassassin_user }}"
+    mode: 0755
+    state: directory
+  with_items:
+    - "{{ spamassassin_home_dir }}"
+    - "{{ spamassassin_bayes_path }}"
 
-    - name: Ensure spamassassin bayes files mode and owner
-      file:
-        access_time: preserve
-        group: "{{ spamassassin_user }}"
-        mode: "0660"
-        modification_time: preserve
-        owner: "{{ spamassassin_user}}"
-        path: "{{ spamassassin_bayes_path }}/{{ item }}"
-        state: touch
-      with_items:
-        - bayes_journal
-        - bayes.mutex
-        - bayes_seen
-        - bayes_toks
+- name: Ensure spamassassin bayes files mode and owner
+  file:
+    access_time: preserve
+    group: "{{ spamassassin_user }}"
+    mode: "0660"
+    modification_time: preserve
+    owner: "{{ spamassassin_user}}"
+    path: "{{ spamassassin_bayes_path }}/{{ item }}"
+    state: touch
+  with_items:
+    - bayes_journal
+    - bayes.mutex
+    - bayes_seen
+    - bayes_toks
 
-    - name: Ensure spamassassin default rules file is latest
-      template:
-        src: spamassassin/local.cf.j2
-        dest: /etc/spamassassin/local.cf
-        owner: root
-        group: root
-        mode: 0644
-      notify: Restart spamd
+- name: Ensure spamassassin default rules file is latest
+  template:
+    src: spamassassin/local.cf.j2
+    dest: /etc/spamassassin/local.cf
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart spamd
 
-    - name: Ensure spamassassin welcomelist is latest
-      template:
-        src: spamassassin/welcomelist.cf.j2
-        dest: "/etc/spamassassin/welcomelist.cf"
-        owner: root
-        group: root
-        mode: 0644
-      notify: Restart spamd
+- name: Ensure spamassassin welcomelist is latest
+  template:
+    src: spamassassin/welcomelist.cf.j2
+    dest: "/etc/spamassassin/welcomelist.cf"
+    owner: root
+    group: root
+    mode: 0644
+  notify: Restart spamd
 
 - name: Ensure spamassassin daemon is enabled and started
   service:
