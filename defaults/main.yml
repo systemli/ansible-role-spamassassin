@@ -320,18 +320,6 @@ spamassassin_razor_enabled: True
 
 spamassassin_razor_config_dir: /etc/spamassassin/.razor
 
-# Enable spam training by users and domain
-# spamassassin_spamtraining_users:
-#    - domain: myfirstdomain.org
-#      users:
-#       - admin
-#       - foo
-#    - domain: myseconddomain.org
-#      users:
-#       - admina
-#       - foobar
-spamassassin_spamtraining_users: []
-
 # Set custom spamassasssin rules
 # spamassassin_custom_rules:
 #   - |
