@@ -31,15 +31,6 @@
         - "{{ spamassassin_home_dir }}"
         - "{{ spamassassin_bayes_path }}"
 
-    - name: Ensure spamassassin config is latest
-      template:
-        src: default/spamassassin.j2
-        dest: /etc/default/spamassassin
-        owner: root
-        group: root
-        mode: 0644
-      notify: Restart spamd
-
     - name: Ensure spamassassin default rules file is latest
       template:
         src: spamassassin/local.cf.j2
