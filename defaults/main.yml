@@ -242,13 +242,6 @@ spamassassin_bayes_learn_to_journal: 0
 # manual welcomelisting
 spamassassin_welcomelist: []
 
-# Add addtional update channels, which should be updates by the daily
-# sa-update cronjob. E.g.:
-# spamassassin_additional_update_channels:
-#   - address: spamassassin.heinlein-support.de
-#     gpg: no
-spamassassin_additional_update_channels: []
-
 # Option allows disabling of rules which would result in a DNS query to one of
 # the listed domains. The first argument must be a literal allow or deny,
 # remaining arguments are domains names.
