@@ -1,12 +1,12 @@
 ---
 - name: Ensure razor is installed
-  apt:
+  ansible.builtin.apt:
     pkg: razor
     state: present
   register: razor_installed
 
-- name: Ensure razor creates home after install  # noqa no-changed-when no-handler
-  command: "{{ item }}"
+- name: Ensure razor creates home after install # noqa no-changed-when no-handler
+  ansible.builtin.command: "{{ item }}"
   args:
     creates: "{{ spamassassin_razor_config_dir }}"
   with_items:
@@ -14,12 +14,12 @@
   when: razor_installed.changed
   notify: Restart spamd
 
-- name: Ensure razor registers identity after install  # noqa no-changed-when no-handler
-  command: "razor-admin -home={{ spamassassin_razor_config_dir }} -register"
+- name: Ensure razor registers identity after install # noqa no-changed-when no-handler
+  ansible.builtin.command: "razor-admin -home={{ spamassassin_razor_config_dir }} -register"
   when: razor_installed.changed
   notify: Restart spamd
 
-- name: Ensure razor discovers home after install  # noqa no-changed-when no-handler
-  command: "razor-admin -home={{ spamassassin_razor_config_dir }} -discover"
+- name: Ensure razor discovers home after install # noqa no-changed-when no-handler
+  ansible.builtin.command: "razor-admin -home={{ spamassassin_razor_config_dir }} -discover"
   when: razor_installed.changed
   notify: Restart spamd

@@ -1,16 +1,16 @@
 ---
 - name: Check if pyzor is already installed
-  stat:
+  ansible.builtin.stat:
     path: /usr/bin/pyzor
   register: pyzor_installed
 
 - name: Ensure pyzor is installed
-  apt:
+  ansible.builtin.apt:
     pkg: pyzor
     state: present
 
 - name: Ensure pyzor discovered mail configuration after install
-  command: pyzor --homedir {{ spamassassin_pyzor_config_dir }} discover
+  ansible.builtin.command: pyzor --homedir {{ spamassassin_pyzor_config_dir }} discover
   args:
     creates: "{{ spamassassin_pyzor_config_dir }}/servers"
   when: not pyzor_installed.stat.exists
