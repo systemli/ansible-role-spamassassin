@@ -52,14 +52,6 @@
         mode: 0644
       notify: Restart spamd
 
-    - name: Ensure spamassassin logrotate is latest
-      template:
-        src: logrotate.d/spamd.j2
-        dest: /etc/logrotate.d/spamd
-        owner: root
-        group: root
-        mode: 0644
-
 - name: Ensure cronjob for spamtraining is present
   cron:
     name: "Spamassassin enable spamtraining for {{ item[1] }}@{{ item[0].domain }}"
