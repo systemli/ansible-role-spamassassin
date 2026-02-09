@@ -1,7 +1,6 @@
 ---
 ## general
 spamassassin_user: debian-spamd
-spamassassin_group: debian-spamd
 spamassassin_home_dir: /var/lib/spamassassin
 spamassassin_log_dir: /var/log/spamassassin
 

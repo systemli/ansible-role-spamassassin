@@ -8,18 +8,6 @@
 - name: Basic configuration
   when: spamassassin_configure
   block:
-    - name: Ensure spamd group is present
-      group:
-        name: "{{ spamassassin_user }}"
-        state: present
-
-    - name: Ensure spamd user is present
-      user:
-        name: "{{ spamassassin_user }}"
-        shell: /bin/sh
-        home: "{{ spamassassin_home_dir }}"
-        group: "{{ spamassassin_group }}"
-
     - name: Ensure spamassassin's directories are present
       file:
         path: "{{ item }}"
