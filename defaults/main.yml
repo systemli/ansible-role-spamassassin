@@ -234,8 +234,11 @@ spamassassin_bayes_seen_ttl: "8d"
 # are actually committed to the Bayes database.
 spamassassin_bayes_learn_to_journal: 0
 
-# manual welcomelisting
-spamassassin_welcomelist: []
+# manual welcomelisting from
+spamassassin_welcomelist_from: []
+
+# manual welcomelisting to
+spamassassin_welcomelist_to: []
 
 # Option allows disabling of rules which would result in a DNS query to one of
 # the listed domains. The first argument must be a literal allow or deny,

@@ -1,6 +1,10 @@
 # manual welcomelisting
 # {{ ansible_managed }}
 
-{% for pattern in spamassassin_welcomelist %}
+{% for pattern in spamassassin_welcomelist_from %}
 welcomelist_from {{ pattern }}
+{% endfor %}
+
+{% for pattern in spamassassin_welcomelist_to %}
+welcomelist_to {{ pattern }}
 {% endfor %}
