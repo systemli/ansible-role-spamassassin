@@ -9,3 +9,9 @@
     name: spamd
     state: restarted
   listen: "Restart spamd"
+
+- name: Restart spamass-milter
+  ansible.builtin.service:
+    name: spamass-milter
+    state: restarted
+  listen: "Restart spamass-milter"

@@ -61,6 +61,10 @@
     enabled: true
     state: started
 
+- name: Import spamass-milter tasks
+  ansible.builtin.import_tasks: spamass-milter.yml
+  when: spamassassin_spamass_milter_enabled
+
 - name: Import pyzor tasks
   ansible.builtin.import_tasks: pyzor.yml
   when: spamassassin_pyzor_enabled
