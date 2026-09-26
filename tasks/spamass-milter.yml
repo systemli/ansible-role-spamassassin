@@ -1,0 +1,20 @@
+---
+- name: Ensure spamass-milter is installed
+  ansible.builtin.apt:
+    pkg: spamass-milter
+    state: present
+
+- name: Configure spamass-milter
+  ansible.builtin.template:
+    src: spamass-milter.j2
+    dest: /etc/default/spamass-milter
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Restart spamass-milter
+
+- name: Ensure spamass-milter daemon is enabled and started
+  ansible.builtin.service:
+    name: spamass-milter
+    enabled: true
+    state: started

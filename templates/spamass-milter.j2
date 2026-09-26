@@ -1,0 +1,53 @@
+# spamass-milt startup defaults
+
+# OPTIONS are passed directly to spamass-milter.
+# man spamass-milter for details
+
+# Non-standard configuration notes:
+# See README.Debian if you use the -x option with sendmail
+# You should not pass the -d option in OPTIONS; use SOCKET for that.
+
+# Define as which user to run spamass-milter
+OPTIONS="-u {{ spamassassin_milter_user }}"
+
+{% if spamassassin_milter_ignore_networks | length > 0 %}
+# Ignore messages from defined ips
+OPTIONS="${OPTIONS} -i {{ spamassassin_milter_ignore_networks | join(',') }}"
+{% endif %}
+
+{% if spamassassin_milter_required_score != "" %}
+# Reject emails with spamassassin scores > {{ spamassassin_milter_required_score }}.
+OPTIONS="${OPTIONS} -r {{ spamassassin_milter_required_score }}"
+{% endif %}
+
+{% if spamassassin_milter_disable_modification is true %}
+# Do not modify Subject:, Content-Type: or body.
+OPTIONS="${OPTIONS} -m"
+{% endif %}
+
+{% if spamassassin_milter_spamc_flags | length > 0 %}
+# Spamc flags
+OPTIONS="${OPTIONS} -- {{ spamassassin_milter_spamc_flags | join(' ') }}"
+{% endif %}
+
+######################################
+# If /usr/sbin/postfix is executable, the following are set by
+# default. You can override them by uncommenting and changing them
+# here.
+######################################
+{% if spamassassin_milter_socket is defined %}
+SOCKET="{{ spamassassin_milter_socket }}"
+{% else %}
+# SOCKET="/var/spool/postfix/spamass/spamass.sock"
+{% endif %}
+{% if spamassassin_milter_socket_user is defined and spamassassin_milter_socket_group is defined %}
+SOCKETOWNER="{{ spamassassin_milter_socket_user }}:{{ spamassassin_milter_socket_group }}"
+{% else %}
+# SOCKETOWNER="postfix:postfix"
+{% endif %}
+{% if spamassassin_milter_socket_mode is defined %}
+SOCKETMODE="{{ spamassassin_milter_socket_mode }}"
+{% else %}
+# SOCKETMODE="0660"
+{% endif %}
+######################################

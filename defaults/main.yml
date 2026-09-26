@@ -81,7 +81,7 @@ spamassassin_dns_available: "yes"
 # this may be platform dependent. Please consult the Net::DNS::Resolver
 # documentation for details.
 spamassassin_dns_servers: []
-  
+
 # Allowed: nfsafe, flock, win32
 spamassassin_lock_method: flock
 
@@ -356,3 +356,18 @@ spamassassin_packages:
   - spamassassin
   - spamc
   - spamd
+
+# Install and configure spamass milter
+spamassassin_spamass_milter_enabled: true
+
+spamassassin_milter_user: spamass-milter
+
+spamassassin_milter_ignore_networks: []
+
+spamassassin_milter_required_score: ""
+
+spamassassin_milter_disable_modification: true
+
+spamassassin_milter_spamc_flags:
+  - "--max-size=20971520"
+  - "--username=debian-spamd"
