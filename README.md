@@ -27,7 +27,7 @@ Download latest release with `ansible-galaxy`
 ## Testing & Development
 
 Molecule with the Docker driver and GitHub Actions are used for continuous testing.
-CI runs the role on Debian 13 (trixie); `meta/main.yml` lists Debian trixie and bookworm.
+CI runs the role on Debian 13 (trixie).
 You can test the role locally with
 
     molecule test

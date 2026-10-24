@@ -5,7 +5,7 @@ galaxy_info:
   description: Install and maintain spamassassin. Contains tests for Molecule.
   company: systemli.org
   license: GPLv3
-  min_ansible_version: "2.3"
+  min_ansible_version: "2.14"
   galaxy_tags:
     - mail
     - spam
@@ -15,5 +15,4 @@ galaxy_info:
     - name: Debian
       versions:
         - trixie
-        - bookworm
 dependencies: []
