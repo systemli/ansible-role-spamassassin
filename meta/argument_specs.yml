@@ -1,0 +1,210 @@
+---
+argument_specs:
+  main:
+    short_description: Install and configure SpamAssassin, spamass-milter, Pyzor and Razor
+    description:
+      - Installs SpamAssassin with a local configuration, optional Pyzor and Razor checks and optionally spamass-milter.
+    options:
+      spamassassin_user:
+        type: str
+      spamassassin_home_dir:
+        type: str
+      spamassassin_rewrite_header_enabled:
+        type: bool
+        description:
+          - Rewrite the mail header?
+      spamassassin_rewrite_header:
+        type: str
+      spamassassin_report_safe:
+        type: int
+        choices:
+          - 0
+          - 1
+          - 2
+        description:
+          - Allowed 0, 1, 2 see https://spamassassin.apache.org/full/3.0.x/dist/doc/Mail_SpamAssassin_Conf.html
+      spamassassin_required_score:
+        type: float
+        description:
+          - Set the score required before a mail is considered spam
+      spamassassin_use_bayes:
+        type: int
+        description:
+          - Whether to use the naive-Bayesian-style classifier built into SpamAssassin.
+      spamassassin_bayes_auto_learn:
+        type: int
+        description:
+          - Whether to use rules using the naive-Bayesian-style classifier built into SpamAssassin.
+      spamassassin_bayes_path:
+        type: str
+        description:
+          - Where to store bayes db
+      spamassassin_bayes_file_mode:
+        type: str
+        description:
+          - The file mode bits used for the Bayesian filtering database files. Make sure you specify this using the 'x' mode bits set, as it may also be used to create directories. However, if a file is created, the resulting file will not have any execute bits set (the umask is set to 111).
+      spamassassin_trusted_networks:
+        type: list
+        elements: str
+        description:
+          - Networks or hosts which are trusted.
+      spamassassin_dns_available:
+        type: str
+        description:
+          - 'Whether DNS resolving is available: C(yes), C(no) or C(test), optionally followed by a list of domains. Quotes are important in YAML.'
+      spamassassin_dns_servers:
+        type: list
+        elements: str
+        description:
+          - DNS servers, optionally with port (C(127.0.0.1:53), C([::1]:53)). If empty, the system resolvers are used.
+      spamassassin_lock_method:
+        type: str
+        choices:
+          - nfssafe
+          - flock
+          - win32
+        description:
+          - Lock method.
+      spamassassin_bayes_auto_learn_threshold_nonspam:
+        type: float
+        description:
+          - The score threshold below which a mail has to score, to be fed into SpamAssassin's learning systems automatically as a non-spam message.
+      spamassassin_bayes_auto_learn_threshold_spam:
+        type: float
+        description:
+          - from the body to auto-learn as spam. Therefore, the minimum working value for this option is 6.
+      spamassassin_bayes_auto_learn_on_error:
+        type: int
+        description:
+          - With bayes_auto_learn_on_error off, autolearning will be performed even if bayes classifier already agrees with the new classification (i.e. yielded BAYES_00 for what we are now trying to teach it as ham, or yielded BAYES_99 for spam). This is a traditional setting, the default was chosen to retain backward compatibility. With bayes_auto_learn_on_error turned on, autolearning will be performed only when a bayes classifier had a different opinion from what the autolearner is now trying to teach it (i.e. it made an error in judgement). This strategy may or may not produce better future classifications, but usually works very well, while also preventing unnecessary overlearning and slows down database growth.
+      spamassassin_bayes_token_sources:
+        type: list
+        elements: str
+        description:
+          - 'Controls which sources in a mail message can contribute tokens (e.g. words, phrases, etc.) to a Bayes classifier. The argument is a space-separated list of keywords: header, visible, invisible, uri, mimepart), each of which may be prefixed by a no to indicate its exclusion. Additionally two reserved keywords are allowed: all and none (or: noall). The list of keywords is processed sequentially: a keyword all adds all available keywords to a set being built, a none or noall clears the set, other non-negated keywords are added to the set, and negated keywords are removed from the set. Keywords are case-insensitive. The default set is: header visible invisible uri, which is equivalent for example to: All NoMIMEpart. The reason why mimepart is not currently in a default set is that it is a newer source (introduced with SpamAssassin version 3.4.1) and not much experience has yet been gathered regarding its usefulness. See also option bayes_ignore_header for a fine-grained control on individual header fields under the umbrella of a more general keyword header here. Keywords imply the following data sources: header - tokens collected from a message header section visible - words from visible text (plain or HTML) in a message body invisible - hidden/invisible text in HTML parts of a message body uri - URIs collected from a message body mimepart - digests (hashes) of all MIME parts (textual or non-textual) of a message, computed after Base64 and quoted-printable decoding, suffixed by their Content-Type all - adds all the above keywords to the set being assembled none or noall - removes all keywords from the set The bayes_token_sources directive may appear multiple times, its keywords are interpreted sequentially, adding or removing items from the final set as they appear in their order in bayes_token_sources directive(s).'
+      spamassassin_bayes_ignore_header:
+        type: list
+        elements: str
+        description:
+          - 'If you receive mail filtered by upstream mail systems, like a spam-filtering ISP or mailing list, and that service adds new headers (as most of them do), these headers may provide inappropriate cues to the Bayesian classifier, allowing it to take a "short cut". To avoid this, list the headers using this setting. Header matching is case-insensitive. Example:'
+      spamassassin_bayes_ignore_from:
+        type: list
+        elements: str
+        description:
+          - Bayesian classification and autolearning will not be performed on mail from the listed addresses. Program sa-learn will also ignore the listed addresses if it is invoked using the --use-ignores option. One or more addresses can be listed, see welcomelist_from. Spam messages from certain senders may contain many words that frequently occur in ham. For example, one might read messages from a preferred bookstore but also get unwanted spam messages from other bookstores. If the unwanted messages are learned as spam then any messages discussing books, including the preferred bookstore and antiquarian messages would be in danger of being marked as spam. The addresses of the annoying bookstores would be listed. (Assuming they were halfway legitimate and didn't send you mail through myriad affiliates.) Those who have pieces of spam in legitimate messages or otherwise receive ham messages containing potentially spammy words might fear that some spam messages might be in danger of being marked as ham. The addresses of the spam mailing lists, correspondents, etc. would be listed.
+      spamassassin_bayes_ignore_to:
+        type: list
+        elements: str
+        description:
+          - Bayesian classification and autolearning will not be performed on mail to the listed addresses. See bayes_ignore_from for details.
+      spamassassin_bayes_learn_during_report:
+        type: int
+        description:
+          - The Bayes system will, by default, learn any reported messages (spamassassin -r) as spam. If you do not want this to happen, set this option to 0.
+      spamassassin_bayes_expiry_max_db_size:
+        type: int
+        description:
+          - What should be the maximum size of the Bayes tokens database? When expiry occurs, the Bayes system will keep either 75% of the maximum value, or 100,000 tokens, whichever has a larger value. 150,000 tokens is roughly equivalent to a 8Mb database file.
+      spamassassin_bayes_auto_expire:
+        type: int
+        description:
+          - If enabled, the Bayes system will try to automatically expire old tokens from the database. Auto-expiry occurs when the number of tokens in the database surpasses the bayes_expiry_max_db_size value. If a bayes datastore backend does not implement individual key/value expirations, the setting is silently ignored.
+      spamassassin_bayes_token_ttl:
+        type: str
+        description:
+          - Time-to-live / expiration time in seconds for tokens kept in a Bayes database. A numeric value is optionally suffixed by a time unit (s, m, h, d, w, indicating seconds (default), minutes, hours, days, weeks). If bayes_auto_expire is true and a Bayes datastore backend supports it (currently only Redis), this setting controls deletion of expired tokens from a bayes database. The value is observed on a best-effort basis, exact timing promises are not necessarily kept. If a bayes datastore backend does not implement individual key/value expirations, the setting is silently ignored.
+      spamassassin_bayes_seen_ttl:
+        type: str
+        description:
+          - Time-to-live / expiration time in seconds for 'seen' entries (i.e. mail message digests with their status) kept in a Bayes database. A numeric value is optionally suffixed by a time unit (s, m, h, d, w, indicating seconds (default), minutes, hours, days, weeks). If bayes_auto_expire is true and a Bayes datastore backend supports it (currently only Redis), this setting controls deletion of expired 'seen' entries from a bayes database. The value is observed on a best-effort basis, exact timing promises are not necessarily kept. If a bayes datastore backend does not implement individual key/value expirations, the setting is silently ignored.
+      spamassassin_bayes_learn_to_journal:
+        type: int
+        description:
+          - If this option is set, whenever SpamAssassin does Bayes learning, it will put the information into the journal instead of directly into the database. This lowers contention for locking the database to execute an update, but will also cause more access to the journal and cause a delay before the updates are actually committed to the Bayes database.
+      spamassassin_welcomelist_from:
+        type: list
+        elements: str
+        description:
+          - manual welcomelisting from
+      spamassassin_welcomelist_to:
+        type: list
+        elements: str
+        description:
+          - manual welcomelisting to
+      spamassassin_dns_query_restrictions:
+        type: list
+        elements: str
+        description:
+          - Entries for C(dns_query_restriction), for example C(deny dnswl.org surbl.org) or C(allow zen.spamhaus.org).
+      spamassassin_rbl_timeout:
+        type: str
+        description:
+          - 'Value of C(rbl_timeout): C(t [t_min] [zone]).'
+      spamassassin_pyzor_enabled:
+        type: bool
+        description:
+          - Enable additional pyzor check
+      spamassassin_pyzor_config_dir:
+        type: str
+      spamassassin_razor_enabled:
+        type: bool
+        description:
+          - Enable additional razor chek
+      spamassassin_razor_config_dir:
+        type: str
+      spamassassin_custom_rules:
+        type: list
+        elements: str
+        description:
+          - Custom SpamAssassin rules, each item is a block of rule text.
+      spamassassin_custom_scores:
+        type: list
+        elements: dict
+        description:
+          - Custom scores.
+        options:
+          name:
+            type: str
+            required: true
+          score:
+            type: str
+            required: true
+            description:
+              - One or four scores, for example C("0 1.5 0 0.919").
+      spamassassin_packages:
+        type: list
+        elements: str
+      spamassassin_spamass_milter_enabled:
+        type: bool
+        description:
+          - Install and configure spamass milter
+      spamassassin_milter_user:
+        type: str
+      spamassassin_milter_ignore_networks:
+        type: list
+        elements: str
+      spamassassin_milter_required_score:
+        type: str
+        description:
+          - Reject mails with a score above this value. Empty to disable.
+      spamassassin_milter_disable_modification:
+        type: bool
+      spamassassin_milter_spamc_flags:
+        type: list
+        elements: str
+      spamassassin_milter_socket:
+        type: str
+        description:
+          - Socket of spamass-milter. Optional.
+      spamassassin_milter_socket_user:
+        type: str
+        description:
+          - Owner of the socket. Only used together with C(spamassassin_milter_socket_group).
+      spamassassin_milter_socket_group:
+        type: str
+        description:
+          - Group of the socket. Only used together with C(spamassassin_milter_socket_user).
+      spamassassin_milter_socket_mode:
+        type: str
+        description:
+          - File mode of the socket. Optional.

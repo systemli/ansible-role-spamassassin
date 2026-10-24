@@ -7,7 +7,6 @@ Ansible role that installs and configures SpamAssassin (including DKIM, pyzor an
 - `defaults/main.yml`: role variables with defaults
 - `tasks/`, `handlers/`, `templates/`, `meta/`: role code
 - `molecule/default/`: integration test (`molecule.yml`, `prepare.yml`, `converge.yml`)
-- `requirements.yml`: collection dependencies (`community.general`)
 
 ## Checks
 
