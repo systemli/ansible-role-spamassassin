@@ -10,7 +10,7 @@ Ansible role that installs and configures SpamAssassin (including DKIM, pyzor an
 
 ## Checks
 
-- `ansible-lint .` (config in `.ansible-lint`) and `yamllint .` (config in `.yamllint`)
+- `ansible-lint` with the default configuration (no repo-specific config)
 - `molecule test` runs the role in a container; CI runs it through the shared `systemli/github-ansible-workflow`
 - `ansible-lint` creates `.ansible/`; it is git ignored, never commit it
 
