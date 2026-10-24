@@ -3,7 +3,7 @@
 [![Build Status](https://github.com/systemli/ansible-role-spamassassin/workflows/Integration/badge.svg?branch=main)](https://github.com/systemli/ansible-role-spamassassin/actions?query=workflow%3AIntegration)
 [![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-spamassassin-blue.svg)](https://galaxy.ansible.com/systemli/spamassassin/)
 
-Role to install & maintain spamassassin (including DKIM, pyzor and razor checks)
+Role to install & maintain SpamAssassin (including DKIM, pyzor and razor checks)
 
 ## Role Variables
 
@@ -26,12 +26,14 @@ Download latest release with `ansible-galaxy`
 
 ## Testing & Development
 
-Molecule, Goss, Docker, and Github Actions are used for continous testing.
-You can easily test the role locally with
+Molecule with the Docker driver and GitHub Actions are used for continuous testing.
+CI runs the role on Debian 13 (trixie); `meta/main.yml` lists Debian trixie and bookworm.
+You can test the role locally with
 
     molecule test
 
-This requires Molecule, Vagrant and `python-vagrant` to be installed.
+Use `molecule converge` to apply the role and `molecule login` to open a shell in the container.
+This requires Docker or Podman, `molecule`, `molecule-plugins[docker]` and `ansible-lint` to be installed.
 
 ## License
 
